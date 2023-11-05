@@ -1,5 +1,7 @@
 package com.restapi.spartaforum.service;
 
+import static java.lang.Boolean.TRUE;
+import static org.springframework.http.HttpStatus.NOT_MODIFIED;
 import static org.springframework.http.HttpStatus.OK;
 
 import com.restapi.spartaforum.domain.dto.QuestionMapper;
@@ -62,21 +64,37 @@ public class QuestionService {
     }
 
     @Transactional(readOnly = true)
-    public ResponseEntity<QuestionResponseDto> selectPost(Long postId) {
+    public ResponseEntity<QuestionResponseDto> getPost(Long postId) {
         // 게시글 찾고, 없다면 예외처리
-        Question foundQuestion = questionRepo.findById(postId)
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        String.format("%s ID에 해당하는 질문게시글을 찾을 수 없습니다.", postId))
-                );
+        Question foundQuestion = findByIdOrThrowException(postId);
         QuestionResponseDto responseDto = questionMapper.questionToResponseDto(foundQuestion);
         return new ResponseEntity<>(responseDto, OK);
     }
 
     @Transactional(readOnly = true)
-    public ResponseEntity<List<QuestionResponseDto>> selectAllPosts() {
+    public ResponseEntity<List<QuestionResponseDto>> getAllPosts() {
         List<QuestionResponseDto> questionResponseDtos = questionRepo.findAll().stream()
                 .map(question -> questionMapper.questionToResponseDto(question))
                 .collect(Collectors.toList());
         return new ResponseEntity<>(questionResponseDtos, OK);
+    }
+
+    public ResponseEntity<Boolean> updatePost(Long postId, QuestionRequestDto requestDto) {
+        // 게시글 조회 후, 없는 게시글인 경우 예외처리
+        Question foundQuestion = findByIdOrThrowException(postId);
+
+        // 게시글 수정
+        Boolean result = foundQuestion.updateQuestion(requestDto.getTitle(), requestDto.getAuthor(),
+                requestDto.getPassword(), requestDto.getContent());
+
+        // 수정 결과 반환
+        return new ResponseEntity<>(result, result == TRUE ? OK : NOT_MODIFIED);
+    }
+
+    private Question findByIdOrThrowException(Long postId) throws ResourceNotFoundException {
+        return questionRepo.findById(postId)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        String.format("%s ID에 해당하는 질문게시글을 찾을 수 없습니다.", postId))
+                );
     }
 }

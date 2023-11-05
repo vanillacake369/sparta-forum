@@ -56,11 +56,11 @@ class QuestionServiceTest {
         questionRepo.save(question1);
 
         // WHEN
-        ResponseEntity<QuestionResponseDto> responseEntity1 = questionService.selectPost(id1);
+        ResponseEntity<QuestionResponseDto> responseEntity1 = questionService.getPost(id1);
 
         // THEN
         assertThrows(ResourceNotFoundException.class, () -> {
-            questionService.selectPost(id2);
+            questionService.getPost(id2);
         });
         assertEquals(question1.getTitle(), responseEntity1.getBody().getTitle());
     }
