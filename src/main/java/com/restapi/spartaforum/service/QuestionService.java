@@ -97,4 +97,8 @@ public class QuestionService {
                         String.format("%s ID에 해당하는 질문게시글을 찾을 수 없습니다.", postId))
                 );
     }
+
+    public void removePost(Long postId) {
+        questionRepo.deleteById(postId);
+    }
 }
