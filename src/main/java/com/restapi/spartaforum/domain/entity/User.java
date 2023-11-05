@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.Set;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -25,4 +26,13 @@ public class User extends TimeStamp {
 
     @OneToMany(mappedBy = "user")
     private Set<Question> questions;
+
+
+    @Builder
+    public User(Long id, String name, String password) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+        this.questions = questions;
+    }
 }
