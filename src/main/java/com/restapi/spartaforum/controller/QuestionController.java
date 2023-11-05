@@ -3,6 +3,7 @@ package com.restapi.spartaforum.controller;
 import com.restapi.spartaforum.domain.dto.QuestionRequestDto;
 import com.restapi.spartaforum.domain.dto.QuestionResponseDto;
 import com.restapi.spartaforum.service.QuestionService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,5 +27,10 @@ public class QuestionController {
     @GetMapping("{postId}")
     public ResponseEntity<QuestionResponseDto> selectPost(@PathVariable Long postId) {
         return questionService.selectPost(postId);
+    }
+
+    @GetMapping("")
+    public ResponseEntity<List<QuestionResponseDto>> selectAllPosts() {
+        return questionService.selectAllPosts();
     }
 }

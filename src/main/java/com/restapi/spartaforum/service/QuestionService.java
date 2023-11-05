@@ -9,6 +9,8 @@ import com.restapi.spartaforum.domain.entity.Question;
 import com.restapi.spartaforum.domain.entity.User;
 import com.restapi.spartaforum.domain.repo.QuestionRepo;
 import com.restapi.spartaforum.domain.repo.UserRepo;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
@@ -68,5 +70,13 @@ public class QuestionService {
                 );
         QuestionResponseDto responseDto = questionMapper.questionToResponseDto(foundQuestion);
         return new ResponseEntity<>(responseDto, OK);
+    }
+
+    @Transactional(readOnly = true)
+    public ResponseEntity<List<QuestionResponseDto>> selectAllPosts() {
+        List<QuestionResponseDto> questionResponseDtos = questionRepo.findAll().stream()
+                .map(question -> questionMapper.questionToResponseDto(question))
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(questionResponseDtos, OK);
     }
 }
