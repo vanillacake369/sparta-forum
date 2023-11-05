@@ -4,10 +4,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.Set;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Entity
+@Getter
 @RequiredArgsConstructor
 @Table(name = "user")
 public class User extends TimeStamp {
@@ -19,5 +23,6 @@ public class User extends TimeStamp {
 
     private String password;
 
-
+    @OneToMany(mappedBy = "user")
+    private Set<Question> questions;
 }
