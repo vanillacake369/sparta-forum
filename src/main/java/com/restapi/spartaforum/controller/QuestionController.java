@@ -43,7 +43,7 @@ public class QuestionController {
     }
 
     @DeleteMapping("")
-    public void removePost(@RequestHeader("postId") Long postId) {
-        questionService.removePost(postId);
+    public void removePost(@RequestHeader("postId") Long postId, @RequestHeader("password") String password) {
+        questionService.removePost(postId, password);
     }
 }

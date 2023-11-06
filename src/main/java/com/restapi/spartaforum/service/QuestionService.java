@@ -27,13 +27,18 @@ public class QuestionService {
     private final UserRepo userRepo;
     private final QuestionMapper questionMapper = QuestionMapper.INSTANCE;
 
+    /*
+    게시글 조회
+    1. author를 통해 고객 조회, 없다면 고객 생성
+    2. 게시글 생성
+    3. 생성한 게시글 저장
+    4. 반환 DTO 매핑 이후 반환
+     */
     public ResponseEntity<QuestionResponseDto> createPost(QuestionRequestDto requestDto) {
-        // author를 통해 고객 조회, 없다면 고객 생성
         String author = requestDto.getAuthor();
         String password = requestDto.getPassword();
         User user = getOrCreateUserIfNotExists(author, password);
 
-        // 게시글 생성
         Question question = Question.builder()
                 .title(requestDto.getTitle())
                 .author(requestDto.getAuthor())
@@ -41,28 +46,18 @@ public class QuestionService {
                 .content(requestDto.getContent())
                 .user(user).build();
 
-        // 게시글 저장
         Question savedQuestion = questionRepo.save(question);
 
-        // 반환 DTO 매핑
         QuestionResponseDto questionResponseDto = questionMapper.questionToResponseDto(savedQuestion);
 
-        // 반환
         return new ResponseEntity<>(questionResponseDto, OK);
     }
 
-    final User getOrCreateUserIfNotExists(String name, String password) {
-        User user = userRepo.findUserByName(name);
-        if (user == null) {
-            user = userRepo.save(
-                    User.builder()
-                            .name(name)
-                            .password(password).build()
-            );
-        }
-        return user;
-    }
 
+    /*
+    게시글 조회
+    1. 조회, 없다면 ResourceNotFoundException
+    */
     @Transactional(readOnly = true)
     public ResponseEntity<QuestionResponseDto> getPost(Long postId) {
         // 게시글 찾고, 없다면 예외처리
@@ -71,6 +66,7 @@ public class QuestionService {
         return new ResponseEntity<>(responseDto, OK);
     }
 
+    /* 모든 게시글 가져오기 */
     @Transactional(readOnly = true)
     public ResponseEntity<List<QuestionResponseDto>> getAllPosts() {
         List<QuestionResponseDto> questionResponseDtos = questionRepo.findAll().stream()
@@ -79,26 +75,65 @@ public class QuestionService {
         return new ResponseEntity<>(questionResponseDtos, OK);
     }
 
+    /*
+    게시글 수정
+     1. 조회, 없다면  ResourceNotFoundException
+     2. 비밀번호 검증, 틀리다면  IllegalArgumentException
+     3. 더티체킹을 위한 update
+     4. 수정결과에 따라 status code 반환
+     */
     public ResponseEntity<Boolean> updatePost(Long postId, QuestionRequestDto requestDto) {
-        // 게시글 조회 후, 없는 게시글인 경우 예외처리
         Question foundQuestion = findByIdOrThrowException(postId);
 
-        // 게시글 수정
+        if (!isCorrectPassword(foundQuestion.getPassword(), requestDto.getPassword())) {
+            throw new IllegalArgumentException("찾으시는 게시글의 비밀번호와 일치하지 않습니다.");
+        }
+
         Boolean result = foundQuestion.updateQuestion(requestDto.getTitle(), requestDto.getAuthor(),
                 requestDto.getPassword(), requestDto.getContent());
 
-        // 수정 결과 반환
         return new ResponseEntity<>(result, result == TRUE ? OK : NOT_MODIFIED);
+    }
+
+    /*
+    게시글 삭제
+    1. 조회 후, 없는 게시글인 경우 ResourceNotFoundException
+    2. 비밀번호 검증, 틀리다면 IllegalArgumentException
+    3. 게시글 삭제처리
+     */
+    public void removePost(Long postId, String password) {
+        Question foundQuestion = findByIdOrThrowException(postId);
+
+        if (!isCorrectPassword(foundQuestion.getPassword(), password)) {
+            throw new IllegalArgumentException("찾으시는 게시글의 비밀번호와 일치하지 않습니다.");
+        }
+
+        questionRepo.deleteById(postId);
+    }
+
+
+    final User getOrCreateUserIfNotExists(String name, String password) {
+        User user = userRepo.findUserByName(name);
+        if (user == null) {
+            User newUser = User.builder()
+                    .name(name)
+                    .password(password).build();
+            return userRepo.save(newUser);
+        }
+        return user;
+    }
+
+    private boolean isCorrectPassword(String entityPassword, String dtoPassword) {
+        if (entityPassword.equals(dtoPassword)) {
+            return true;
+        }
+        return false;
     }
 
     private Question findByIdOrThrowException(Long postId) throws ResourceNotFoundException {
         return questionRepo.findById(postId)
                 .orElseThrow(() -> new ResourceNotFoundException(
-                        String.format("%s ID에 해당하는 질문게시글을 찾을 수 없습니다.", postId))
+                        String.format("ID %s번에 해당하는 질문게시글을 찾을 수 없습니다.", postId))
                 );
-    }
-
-    public void removePost(Long postId) {
-        questionRepo.deleteById(postId);
     }
 }
