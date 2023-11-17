@@ -1,13 +1,11 @@
-package com.restapi.spartaforum.service;
+package com.restapi.spartaforum.domain.board;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.restapi.spartaforum.domain.dto.QuestionResponseDto;
-import com.restapi.spartaforum.domain.entity.Question;
-import com.restapi.spartaforum.domain.entity.User;
-import com.restapi.spartaforum.domain.repo.QuestionRepo;
-import com.restapi.spartaforum.domain.repo.UserRepo;
+import com.restapi.spartaforum.domain.user.User;
+import com.restapi.spartaforum.domain.user.UserRepo;
+import java.util.Objects;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,19 +16,19 @@ import org.springframework.http.ResponseEntity;
 
 
 @SpringBootTest
-class QuestionServiceTest {
+class BoardServiceTest {
     @Autowired
-    private QuestionService questionService;
+    private BoardService boardService;
 
     @Autowired
-    private QuestionRepo questionRepo;
+    private BoardRepository boardRepository;
 
     @Autowired
     private UserRepo userRepo;
 
     @AfterEach
     void tearDown() {
-        questionRepo.deleteAllInBatch();
+        boardRepository.deleteAllInBatch();
         userRepo.deleteAllInBatch();
     }
 
@@ -41,7 +39,7 @@ class QuestionServiceTest {
         String name = "jihoon";
 
         // WHEN
-        User jihoon = questionService.getOrCreateUserIfNotExists("jihoon", "1234");
+        User jihoon = boardService.getOrCreateUserIfNotExists("jihoon", "1234");
 
         // THEN
         assertEquals(name, jihoon.getName());
@@ -55,21 +53,20 @@ class QuestionServiceTest {
         Long id1 = 1L;
         User user = new User();
         User save = userRepo.save(user);
-        Question question1 = Question.builder()
+        Board question1 = Board.builder()
                 .id(id1)
                 .user(save)
                 .build();
-        questionRepo.save(question1);
+        boardRepository.save(question1);
         // 저장하지 않은 경우
         Long id2 = 2L;
 
         // WHEN
-        ResponseEntity<QuestionResponseDto> responseEntity1 = questionService.getPost(id1);
+        ResponseEntity<BoardResponseDto> responseEntity1 = boardService.getPost(id1);
 
         // THEN
-        assertThrows(ResourceNotFoundException.class, () -> {
-            questionService.getPost(id2);
-        });
-        assertEquals(question1.getTitle(), responseEntity1.getBody().getTitle());
+        String title = Objects.requireNonNull(responseEntity1.getBody()).getTitle();
+        assertThrows(ResourceNotFoundException.class, () -> boardService.getPost(id2));
+        assertEquals(question1.getTitle(), title);
     }
 }

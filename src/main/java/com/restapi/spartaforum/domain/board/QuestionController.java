@@ -1,8 +1,5 @@
-package com.restapi.spartaforum.controller;
+package com.restapi.spartaforum.domain.board;
 
-import com.restapi.spartaforum.domain.dto.QuestionRequestDto;
-import com.restapi.spartaforum.domain.dto.QuestionResponseDto;
-import com.restapi.spartaforum.service.QuestionService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,30 +17,30 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/api/sparta-forum/questions")
 public class QuestionController {
-    private final QuestionService questionService;
+    private final BoardService boardService;
 
     @PostMapping("ask")
-    public ResponseEntity<QuestionResponseDto> createPost(@RequestBody QuestionRequestDto requestDto) {
-        return questionService.createPost(requestDto);
+    public ResponseEntity<BoardResponseDto> createPost(@RequestBody BoardRequestDto requestDto) {
+        return boardService.createPost(requestDto);
     }
 
-    @GetMapping("{postId}")
-    public ResponseEntity<QuestionResponseDto> getPost(@PathVariable Long postId) {
-        return questionService.getPost(postId);
+    @GetMapping("/{postId}")
+    public ResponseEntity<BoardResponseDto> getPost(@PathVariable Long postId) {
+        return boardService.getPost(postId);
     }
 
     @GetMapping("")
-    public ResponseEntity<List<QuestionResponseDto>> getAllPosts() {
-        return questionService.getAllPosts();
+    public ResponseEntity<List<BoardResponseDto>> getAllPosts() {
+        return boardService.getAllPosts();
     }
 
-    @PutMapping("{postId}")
-    public ResponseEntity<Boolean> updatePost(@PathVariable Long postId, @RequestBody QuestionRequestDto requestDto) {
-        return questionService.updatePost(postId, requestDto);
+    @PutMapping("/{postId}")
+    public ResponseEntity<Boolean> updatePost(@PathVariable Long postId, @RequestBody BoardRequestDto requestDto) {
+        return boardService.updatePost(postId, requestDto);
     }
 
     @DeleteMapping("")
     public void removePost(@RequestHeader("postId") Long postId, @RequestHeader("password") String password) {
-        questionService.removePost(postId, password);
+        boardService.removePost(postId, password);
     }
 }

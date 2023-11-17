@@ -1,7 +1,9 @@
-package com.restapi.spartaforum.domain.entity;
+package com.restapi.spartaforum.domain.board;
 
 import static java.lang.Boolean.TRUE;
 
+import com.restapi.spartaforum.domain.common.TimeStamp;
+import com.restapi.spartaforum.domain.user.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,8 +20,8 @@ import org.hibernate.annotations.DynamicUpdate;
 @Getter
 @RequiredArgsConstructor
 @DynamicUpdate
-@Table(name = "question")
-public class Question extends TimeStamp {
+@Table(name = "board")
+public class Board extends TimeStamp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -37,7 +39,7 @@ public class Question extends TimeStamp {
     private User user;
 
     @Builder
-    public Question(Long id, String title, String author, String password, String content, User user) {
+    public Board(Long id, String title, String author, String password, String content, User user) {
         this.id = id;
         this.title = title;
         this.author = author;
@@ -46,7 +48,7 @@ public class Question extends TimeStamp {
         this.user = user;
     }
 
-    public Boolean updateQuestion(String title, String author, String password, String content) {
+    public Boolean updateBoard(String title, String author, String password, String content) {
         this.title = title;
         this.author = author;
         this.password = password;

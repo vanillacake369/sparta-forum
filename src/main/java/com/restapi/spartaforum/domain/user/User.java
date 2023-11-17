@@ -1,5 +1,7 @@
-package com.restapi.spartaforum.domain.entity;
+package com.restapi.spartaforum.domain.user;
 
+import com.restapi.spartaforum.domain.board.Board;
+import com.restapi.spartaforum.domain.common.TimeStamp;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,7 +27,7 @@ public class User extends TimeStamp {
     private String password;
 
     @OneToMany(mappedBy = "user")
-    private Set<Question> questions;
+    private Set<Board> questions;
 
 
     @Builder
