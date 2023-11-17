@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Application 설정 ###
+application.yml
