@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.restapi.spartaforum.domain.user.User;
-import com.restapi.spartaforum.domain.user.UserRepo;
+import com.restapi.spartaforum.domain.user.UserRepository;
 import java.util.Objects;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,12 +24,12 @@ class BoardServiceTest {
     private BoardRepository boardRepository;
 
     @Autowired
-    private UserRepo userRepo;
+    private UserRepository userRepository;
 
     @AfterEach
     void tearDown() {
         boardRepository.deleteAllInBatch();
-        userRepo.deleteAllInBatch();
+        userRepository.deleteAllInBatch();
     }
 
     @Test
@@ -52,7 +52,7 @@ class BoardServiceTest {
         // User,Question 저장한 경우
         Long id1 = 1L;
         User user = new User();
-        User save = userRepo.save(user);
+        User save = userRepository.save(user);
         Board question1 = Board.builder()
                 .id(id1)
                 .user(save)

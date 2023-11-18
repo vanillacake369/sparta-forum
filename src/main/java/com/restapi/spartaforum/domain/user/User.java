@@ -29,11 +29,16 @@ public class User extends TimeStamp {
     @OneToMany(mappedBy = "user")
     private Set<Board> questions;
 
-
     @Builder
-    public User(Long id, String name, String password) {
-        this.id = id;
+    private User(String name, String password) {
         this.name = name;
         this.password = password;
+    }
+
+    public static User of(UserSignUpRequestDTO requestDto) {
+        return User.builder()
+                .name(requestDto.name())
+                .password(requestDto.password())
+                .build();
     }
 }

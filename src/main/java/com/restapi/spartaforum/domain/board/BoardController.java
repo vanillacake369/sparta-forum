@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/sparta-forum/questions")
-public class QuestionController {
+@RequestMapping("/api/sparta-forum/boards")
+public class BoardController {
     private final BoardService boardService;
 
     @PostMapping("ask")

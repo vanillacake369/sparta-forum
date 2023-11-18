@@ -5,7 +5,7 @@ import static org.springframework.http.HttpStatus.NOT_MODIFIED;
 import static org.springframework.http.HttpStatus.OK;
 
 import com.restapi.spartaforum.domain.user.User;
-import com.restapi.spartaforum.domain.user.UserRepo;
+import com.restapi.spartaforum.domain.user.UserRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class BoardService {
     private final BoardRepository boardRepository;
-    private final UserRepo userRepo;
+    private final UserRepository userRepository;
     private final BoardMapper boardMapper = BoardMapper.INSTANCE;
 
     /*
@@ -108,12 +108,12 @@ public class BoardService {
 
 
     final User getOrCreateUserIfNotExists(String name, String password) {
-        User user = userRepo.findUserByName(name);
+        User user = userRepository.findUserByName(name);
         if (user == null) {
             User newUser = User.builder()
                     .name(name)
                     .password(password).build();
-            return userRepo.save(newUser);
+            return userRepository.save(newUser);
         }
         return user;
     }
