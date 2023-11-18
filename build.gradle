@@ -22,25 +22,30 @@ repositories {
 }
 
 dependencies {
+    /* JPA */
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    /* MySQL */
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    /* JWT */
+    compileOnly group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
+    /* MapStruct */
+    implementation 'org.mapstruct:mapstruct:1.4.2.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
+    /* JUnit */
+    testImplementation 'junit:junit:4.13.1'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
     implementation 'org.springframework.boot:spring-boot-starter-data-rest'
     implementation 'org.springframework.boot:spring-boot-starter-hateoas'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'org.mapstruct:mapstruct:1.4.2.Final'
-
-
     compileOnly 'org.projectlombok:lombok'
-
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-
-    runtimeOnly 'com.mysql:mysql-connector-j'
-
     annotationProcessor 'org.projectlombok:lombok'
-    annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
 
-    testImplementation 'junit:junit:4.13.1'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
 }
 
 tasks.named('test') {
