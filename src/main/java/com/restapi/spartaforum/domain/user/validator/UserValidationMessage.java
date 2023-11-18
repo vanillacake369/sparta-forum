@@ -1,9 +1,9 @@
-package com.restapi.spartaforum.domain.validator;
+package com.restapi.spartaforum.domain.user.validator;
 
-import static com.restapi.spartaforum.domain.validator.UserSignUpConstraint.PASSWORD_CONSTRAINT;
-import static com.restapi.spartaforum.domain.validator.UserSignUpConstraint.USERNAME_CONSTRAINT;
+import static com.restapi.spartaforum.domain.user.validator.UserConstraint.PASSWORD_CONSTRAINT;
+import static com.restapi.spartaforum.domain.user.validator.UserConstraint.USERNAME_CONSTRAINT;
 
-public enum UserStatusMessage {
+public enum UserValidationMessage {
     NULL_ERROR("공백 입력은 불가합니다."),
     TYPE_ERROR("문자열을 입력해주세요."),
     USER_NAME_LENGTH_ERROR("최소 " + USERNAME_CONSTRAINT.lengthMin + "자 이상, "
@@ -16,7 +16,7 @@ public enum UserStatusMessage {
 
     final String errorMessage;
 
-    UserStatusMessage(String errorMessage) {
+    UserValidationMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }
 

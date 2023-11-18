@@ -1,17 +1,17 @@
-package com.restapi.spartaforum.domain.validator;
+package com.restapi.spartaforum.domain.user.validator;
 
-import static com.restapi.spartaforum.domain.validator.UserSignUpConstraint.USERNAME_CONSTRAINT;
-import static com.restapi.spartaforum.domain.validator.UserStatusMessage.NULL_ERROR;
-import static com.restapi.spartaforum.domain.validator.UserStatusMessage.USER_NAME_FORMAT_ERROR;
-import static com.restapi.spartaforum.domain.validator.UserStatusMessage.USER_NAME_LENGTH_ERROR;
+import static com.restapi.spartaforum.domain.user.validator.UserConstraint.PASSWORD_CONSTRAINT;
+import static com.restapi.spartaforum.domain.user.validator.UserValidationMessage.NULL_ERROR;
+import static com.restapi.spartaforum.domain.user.validator.UserValidationMessage.PASSWORD_FORMAT_ERROR;
+import static com.restapi.spartaforum.domain.user.validator.UserValidationMessage.PASSWORD_LENGTH_ERROR;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import java.util.regex.Pattern;
 
-public class UserNameValidator implements ConstraintValidator<ValidUserName, String> {
+public class UserPasswordValidator implements ConstraintValidator<ValidPassword, String> {
     @Override
-    public void initialize(ValidUserName constraintAnnotation) {
+    public void initialize(ValidPassword constraintAnnotation) {
         ConstraintValidator.super.initialize(constraintAnnotation);
     }
 
@@ -31,16 +31,16 @@ public class UserNameValidator implements ConstraintValidator<ValidUserName, Str
     }
 
     private boolean isValidLength(String value, ConstraintValidatorContext context) {
-        if (value.length() >= USERNAME_CONSTRAINT.lengthMax && value.length() <= USERNAME_CONSTRAINT.lengthMin) {
-            throwExceptionWithMessage(context, USER_NAME_LENGTH_ERROR.errorMessage);
+        if (value.length() >= PASSWORD_CONSTRAINT.lengthMax && value.length() <= PASSWORD_CONSTRAINT.lengthMin) {
+            throwExceptionWithMessage(context, PASSWORD_LENGTH_ERROR.errorMessage);
             return false;
         }
         return true;
     }
 
     private boolean isValidForm(String value, ConstraintValidatorContext context) {
-        if (!Pattern.matches(USERNAME_CONSTRAINT.regex, value)) {
-            throwExceptionWithMessage(context, USER_NAME_FORMAT_ERROR.errorMessage);
+        if (!Pattern.matches(PASSWORD_CONSTRAINT.regex, value)) {
+            throwExceptionWithMessage(context, PASSWORD_FORMAT_ERROR.errorMessage);
             return false;
         }
         return true;

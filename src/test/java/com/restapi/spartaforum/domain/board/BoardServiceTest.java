@@ -32,18 +32,6 @@ class BoardServiceTest {
         userRepository.deleteAllInBatch();
     }
 
-    @Test
-    @DisplayName("유저가 없다면 새로운 유저를 생성합니다")
-    void 유저를_가져오거나_생성합니다() {
-        // GIVEN
-        String name = "jihoon";
-
-        // WHEN
-        User jihoon = boardService.getOrCreateUserIfNotExists("jihoon", "1234");
-
-        // THEN
-        assertEquals(name, jihoon.getName());
-    }
 
     @Test
     @DisplayName("id에 해당하는 게시글을 찾습니다.")

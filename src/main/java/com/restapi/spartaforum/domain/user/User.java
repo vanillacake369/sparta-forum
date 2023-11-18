@@ -40,12 +40,13 @@ public class User extends TimeStamp {
     private Set<Board> questions;
 
     @Builder
-    private User(String name, String password) {
+    private User(String name, String password, UserRoleEnum role) {
         this.name = name;
         this.password = password;
+        this.role = role;
     }
 
-    public static User of(SignUpRequestDTO requestDto) {
+    public static User of(SignInRequestDTO requestDto) {
         return User.builder()
                 .name(requestDto.name())
                 .password(requestDto.password())
@@ -54,5 +55,13 @@ public class User extends TimeStamp {
 
     static boolean hasNotAdminToken(String token) {
         return !ADMIN_TOKEN.equals(token);
+    }
+
+    public static User of(String name, String password, UserRoleEnum role) {
+        return User.builder()
+                .name(name)
+                .password(password)
+                .role(role)
+                .build();
     }
 }

@@ -4,7 +4,6 @@ import static java.lang.Boolean.TRUE;
 import static org.springframework.http.HttpStatus.NOT_MODIFIED;
 import static org.springframework.http.HttpStatus.OK;
 
-import com.restapi.spartaforum.domain.user.User;
 import com.restapi.spartaforum.domain.user.UserRepository;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,14 +31,13 @@ public class BoardService {
     public ResponseEntity<BoardResponseDto> createPost(BoardRequestDto requestDto) {
         String author = requestDto.getAuthor();
         String password = requestDto.getPassword();
-        User user = getOrCreateUserIfNotExists(author, password);
 
         Board question = Board.builder()
                 .title(requestDto.getTitle())
                 .author(requestDto.getAuthor())
                 .password(requestDto.getPassword())
                 .content(requestDto.getContent())
-                .user(user).build();
+                .build();
 
         Board savedBoard = boardRepository.save(question);
 
@@ -106,17 +104,6 @@ public class BoardService {
         boardRepository.deleteById(postId);
     }
 
-
-    final User getOrCreateUserIfNotExists(String name, String password) {
-        User user = userRepository.findUserByName(name);
-        if (user == null) {
-            User newUser = User.builder()
-                    .name(name)
-                    .password(password).build();
-            return userRepository.save(newUser);
-        }
-        return user;
-    }
 
     private boolean isCorrectPassword(String entityPassword, String dtoPassword) {
         return !entityPassword.equals(dtoPassword);

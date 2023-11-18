@@ -1,10 +1,9 @@
 package com.restapi.spartaforum.domain.user;
 
-import com.restapi.spartaforum.domain.validator.UserStatusMessage;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.spi.ExtendedLogger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,10 +16,22 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class UserController {
     private final UserSignUpService signUpService;
-    private ExtendedLogger logger;
+    private final UserSignInService signInService;
 
     @PostMapping("/signup")
-    public ResponseEntity<UserStatusMessage> createPost(@RequestBody @Valid SignUpRequestDTO requestDto) {
+    public ResponseEntity<UserServiceMessage> signUp(@RequestBody @Valid SignUpRequestDTO requestDto) {
         return signUpService.signUp(requestDto);
+    }
+
+    @PostMapping("/signin")
+    public ResponseEntity<UserServiceMessage> signIn(@RequestBody @Valid SignInRequestDTO requestDto,
+                                                     HttpServletResponse response) {
+        ResponseEntity<UserServiceMessage> responseEntity = null;
+        try {
+            responseEntity = signInService.signIn(requestDto, response);
+        } catch (IllegalArgumentException e) {
+            log.error(e.getMessage(), responseEntity);
+        }
+        return responseEntity;
     }
 }

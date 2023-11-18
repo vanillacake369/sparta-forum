@@ -1,4 +1,4 @@
-package com.restapi.spartaforum.domain.validator;
+package com.restapi.spartaforum.domain.user.validator;
 
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.CONSTRUCTOR;

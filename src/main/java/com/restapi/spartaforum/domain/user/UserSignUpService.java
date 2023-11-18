@@ -2,7 +2,6 @@ package com.restapi.spartaforum.domain.user;
 
 import static org.springframework.http.HttpStatus.OK;
 
-import com.restapi.spartaforum.domain.validator.UserStatusMessage;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,19 +14,19 @@ public class UserSignUpService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public ResponseEntity<UserStatusMessage> signUp(SignUpRequestDTO requestDto) {
+    public ResponseEntity<UserServiceMessage> signUp(SignUpRequestDTO requestDto) {
         String name = requestDto.name();
-        String password = passwordEncoder.encode(requestDto.password());
+        String password = requestDto.password();
 
-        // 중복 확인 -> User
+        // 중복 확인
         verifyIfDuplicated(name, password);
 
-        // 사용자 ROLE 확인 -> User
+        // 사용자 ROLE 확인
         UserRoleEnum role = getRoleByToken(requestDto.isAdmin(), requestDto.adminToken());
 
-        User newUser = User.of(requestDto);
+        User newUser = User.of(name, passwordEncoder.encode(password), role);
         userRepository.save(newUser);
-        return new ResponseEntity<>(UserStatusMessage.SIGNUP_SUCCESS, OK);
+        return new ResponseEntity<>(UserServiceMessage.SIGNUP_SUCCESS, OK);
     }
 
     UserRoleEnum getRoleByToken(boolean isAdmin, String adminToken) {
@@ -41,7 +40,7 @@ public class UserSignUpService {
     }
 
     void verifyIfDuplicated(String name, String password) {
-        Optional<User> checkUsername = Optional.ofNullable(userRepository.findUserByNameAndPassword(name, password));
+        Optional<User> checkUsername = userRepository.findUserByNameAndPassword(name, password);
         if (checkUsername.isPresent()) {
             throw new IllegalArgumentException("중복된 사용자가 존재합니다.");
         }
