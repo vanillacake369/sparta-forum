@@ -1,7 +1,6 @@
 package com.restapi.spartaforum.domain.user;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-
+import com.restapi.spartaforum.domain.validator.UserStatusMessage;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,13 +20,7 @@ public class UserController {
     private ExtendedLogger logger;
 
     @PostMapping("/signup")
-    public ResponseEntity<UserSignUpResponseDTO> createPost(@RequestBody @Valid UserSignUpRequestDTO requestDto) {
-        ResponseEntity<UserSignUpResponseDTO> user = new ResponseEntity<>(BAD_REQUEST);
-        try {
-            user = signUpService.createUser(requestDto);
-        } catch (Exception e) {
-            logger.error(e);
-        }
-        return user;
+    public ResponseEntity<UserStatusMessage> createPost(@RequestBody @Valid SignUpRequestDTO requestDto) {
+        return signUpService.signUp(requestDto);
     }
 }

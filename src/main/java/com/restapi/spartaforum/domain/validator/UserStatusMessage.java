@@ -20,7 +20,7 @@ public enum UserStatusMessage {
         this.errorMessage = errorMessage;
     }
 
-    public String getErrorMessage() {
+    public String getMessage() {
         return errorMessage;
     }
 }

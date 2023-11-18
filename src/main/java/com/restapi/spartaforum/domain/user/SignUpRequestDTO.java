@@ -3,9 +3,11 @@ package com.restapi.spartaforum.domain.user;
 import com.restapi.spartaforum.domain.validator.ValidPassword;
 import com.restapi.spartaforum.domain.validator.ValidUserName;
 
-public record UserSignUpRequestDTO(
+public record SignUpRequestDTO(
         @ValidUserName
         String name,
         @ValidPassword
-        String password) {
+        String password,
+        boolean isAdmin,
+        String adminToken) {
 }
