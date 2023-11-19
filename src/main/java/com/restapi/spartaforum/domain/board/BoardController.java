@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class BoardController {
     private final BoardService boardService;
 
-    @PostMapping("ask")
+    @PostMapping("/post-question")
     public ResponseEntity<BoardResponseDto> createPost(@RequestBody BoardRequestDto requestDto) {
         return boardService.createPost(requestDto);
     }

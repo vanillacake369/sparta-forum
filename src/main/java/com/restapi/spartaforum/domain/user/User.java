@@ -53,15 +53,15 @@ public class User extends TimeStamp {
                 .build();
     }
 
-    static boolean hasNotAdminToken(String token) {
-        return !ADMIN_TOKEN.equals(token);
-    }
-
     public static User of(String name, String password, UserRoleEnum role) {
         return User.builder()
                 .name(name)
                 .password(password)
                 .role(role)
                 .build();
+    }
+
+    static boolean hasNotAdminToken(String token) {
+        return !ADMIN_TOKEN.equals(token);
     }
 }

@@ -1,4 +1,4 @@
-package com.restapi.spartaforum.config.jwt;
+package com.restapi.spartaforum.security.jwt;
 
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;

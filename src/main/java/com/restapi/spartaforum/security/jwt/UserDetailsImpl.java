@@ -1,4 +1,4 @@
-package com.restapi.spartaforum.config.jwt;
+package com.restapi.spartaforum.security.jwt;
 
 import com.restapi.spartaforum.domain.user.User;
 import com.restapi.spartaforum.domain.user.UserRoleEnum;

@@ -1,4 +1,4 @@
-package com.restapi.spartaforum.config.jwt;
+package com.restapi.spartaforum.security.jwt;
 
 import com.restapi.spartaforum.domain.user.UserRoleEnum;
 import io.jsonwebtoken.Claims;
@@ -35,7 +35,7 @@ public class JwtUtil {
     // Token 식별자
     public static final String BEARER_PREFIX = "Bearer ";
     // 토큰 만료시간
-    private final long TOKEN_TIME = 60 * 60 * 1000L; // 60분
+    private static final long TOKEN_TIME = 60 * 60 * 1000L; // 60분
     // Base64 Encode 한 SecretKey
     @Value("${jwt.secret.key}")
     private String secretKey;

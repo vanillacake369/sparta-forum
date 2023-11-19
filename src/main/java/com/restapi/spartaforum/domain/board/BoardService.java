@@ -1,7 +1,5 @@
 package com.restapi.spartaforum.domain.board;
 
-import static java.lang.Boolean.TRUE;
-import static org.springframework.http.HttpStatus.NOT_MODIFIED;
 import static org.springframework.http.HttpStatus.OK;
 
 import com.restapi.spartaforum.domain.user.UserRepository;
@@ -29,14 +27,9 @@ public class BoardService {
     4. 반환 DTO 매핑 이후 반환
      */
     public ResponseEntity<BoardResponseDto> createPost(BoardRequestDto requestDto) {
-        String author = requestDto.getAuthor();
-        String password = requestDto.getPassword();
-
         Board question = Board.builder()
-                .title(requestDto.getTitle())
-                .author(requestDto.getAuthor())
-                .password(requestDto.getPassword())
-                .content(requestDto.getContent())
+                .title(requestDto.title())
+                .content(requestDto.content())
                 .build();
 
         Board savedBoard = boardRepository.save(question);
@@ -78,14 +71,7 @@ public class BoardService {
     public ResponseEntity<Boolean> updatePost(Long postId, BoardRequestDto requestDto) {
         Board foundBoard = findByIdOrThrowException(postId);
 
-        if (isCorrectPassword(foundBoard.getPassword(), requestDto.getPassword())) {
-            throw new IllegalArgumentException("찾으시는 게시글의 비밀번호와 일치하지 않습니다.");
-        }
-
-        Boolean result = foundBoard.updateBoard(requestDto.getTitle(), requestDto.getAuthor(),
-                requestDto.getPassword(), requestDto.getContent());
-
-        return new ResponseEntity<>(result, result == TRUE ? OK : NOT_MODIFIED);
+        return new ResponseEntity<>(OK);
     }
 
     /*
@@ -96,11 +82,6 @@ public class BoardService {
      */
     public void removePost(Long postId, String password) {
         Board foundQuestion = findByIdOrThrowException(postId);
-
-        if (isCorrectPassword(foundQuestion.getPassword(), password)) {
-            throw new IllegalArgumentException("찾으시는 게시글의 비밀번호와 일치하지 않습니다.");
-        }
-
         boardRepository.deleteById(postId);
     }
 

@@ -5,6 +5,7 @@ import static java.lang.Boolean.TRUE;
 import com.restapi.spartaforum.domain.common.TimeStamp;
 import com.restapi.spartaforum.domain.user.User;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,31 +29,33 @@ public class Board extends TimeStamp {
 
     private String title;
 
-    private String author;
-
-    private String password;
-
     private String content;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @Builder
-    public Board(Long id, String title, String author, String password, String content, User user) {
+    public Board(Long id, String title, String content, User user) {
         this.id = id;
         this.title = title;
-        this.author = author;
-        this.password = password;
         this.content = content;
         this.user = user;
     }
 
-    public Boolean updateBoard(String title, String author, String password, String content) {
+    public Boolean updateBoard(String title, String content) {
         this.title = title;
-        this.author = author;
-        this.password = password;
         this.content = content;
         return TRUE;
+    }
+
+    @Override
+    public String toString() {
+        return "Board{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", user=" + user +
+                '}';
     }
 }
