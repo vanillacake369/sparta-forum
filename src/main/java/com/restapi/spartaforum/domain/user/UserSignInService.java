@@ -2,7 +2,7 @@ package com.restapi.spartaforum.domain.user;
 
 import static org.springframework.http.HttpStatus.OK;
 
-import com.restapi.spartaforum.jwt.JwtUtil;
+import com.restapi.spartaforum.config.jwt.JwtUtil;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
