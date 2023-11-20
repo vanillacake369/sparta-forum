@@ -1,16 +1,12 @@
 package com.restapi.spartaforum.security;
 
-import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
-
 import com.restapi.spartaforum.security.jwt.JwtAuthenticationFilter;
 import com.restapi.spartaforum.security.jwt.JwtAuthorizationFilter;
 import com.restapi.spartaforum.security.jwt.JwtUtil;
 import com.restapi.spartaforum.security.jwt.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -41,22 +37,29 @@ public class WebSecurityConfig {
 
         // permit sources
         http.authorizeHttpRequests((authorizeHttpRequests) ->
-                /*  더 구체적인 기준이 덜 구제적인 기준보다 우선하는 것이 절대적으로 중요하다.  */
-                authorizeHttpRequests
-                        .requestMatchers("/api/sparta-forum/admin/**")
-                        .hasRole("ADMIN") // '/api/sparta-forum/admin/**' 요청 ADMIN만 접근허용
-                        .requestMatchers(antMatcher(HttpMethod.GET, "/api/sparta-forum/boards"))
-                        .permitAll() // GET '/api/sparta-forum/boards' 요청"만" 모든 접근 허용
-                        .requestMatchers("/api/sparta-forum/user/**")
-                        .permitAll() // '/api/sparta-forum/user/**' 요청 모든 접근 허용
-                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations()) // static resources
-                        .permitAll() // 지정한 resources 접근 허용 설정
-                        .anyRequest().authenticated() // 그 외 모든 요청 인증처리
+                        /*  더 구체적인 기준이 덜 구제적인 기준보다 우선하는 것이 절대적으로 중요하다.  */
+                        authorizeHttpRequests
+                                .anyRequest()
+                                .permitAll()
+//                        .requestMatchers("/api/sparta-forum/admin/**")
+//                        .hasRole("ADMIN") // '/api/sparta-forum/admin/**' 요청 ADMIN만 접근허용
+//                        .requestMatchers(antMatcher(HttpMethod.GET, "/api/sparta-forum/boards"))
+//                        .permitAll()      // GET '/api/sparta-forum/boards' 요청"만" 모든 접근 허용
+//                        .requestMatchers("/api/sparta-forum/user/**")
+//                        .permitAll()      // '/api/sparta-forum/user/**' 요청 모든 접근 허용
+//                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
+//                        .permitAll()      // static resources 접근 허용 설정
+//                        .anyRequest().authenticated()
         );
 
         // handle login
         http.formLogin((formLogin) ->
-                formLogin.loginPage("/api/sparta-forum/user/login-page").permitAll()
+                        formLogin.loginPage("/login")
+                                .permitAll()
+//                        .loginProcessingUrl("/api/sparta-forum/user/signin")
+//                        .defaultSuccessUrl("/")
+//                        .failureUrl("/api/sparta-forum/user/login?error")
+//                        .permitAll()
         );
 
         // 필터 관리

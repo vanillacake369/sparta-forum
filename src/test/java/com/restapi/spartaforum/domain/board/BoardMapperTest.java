@@ -18,7 +18,7 @@ class BoardMapperTest {
     void 질문요청dto를_질문객체로_변환() {
         // GIVEN
         String expectedTitle = "JPA Question";
-        BoardRequestDto boardRequestDto = new BoardRequestDto("JPA Question",
+        BoardRequestDTO boardRequestDto = new BoardRequestDTO("JPA Question",
                 "I wonder about persistence context");
 
         // WHEN
@@ -36,11 +36,11 @@ class BoardMapperTest {
                 .id(1L)
                 .title("Title")
                 .content("content")
-                .user(new User())
+                .author(new User())
                 .build();
 
         // WHEN
-        BoardResponseDto responseDto = boardMapper.questionToResponseDto(question);
+        BoardResponseDTO responseDto = boardMapper.questionToResponseDto(question);
 
         // THEN
         assertEquals(question.getTitle(), responseDto.title());

@@ -43,17 +43,17 @@ class BoardServiceTest {
         User save = userRepository.save(user);
         Board question1 = Board.builder()
                 .id(id1)
-                .user(save)
+                .author(save)
                 .build();
         boardRepository.save(question1);
         // 저장하지 않은 경우
         Long id2 = 2L;
 
         // WHEN
-        ResponseEntity<BoardResponseDto> responseEntity1 = boardService.getPost(id1);
+        ResponseEntity<BoardResponseDTO> responseEntity1 = boardService.getPost(id1);
 
         // THEN
-        String title = Objects.requireNonNull(responseEntity1.getBody()).getTitle();
+        String title = Objects.requireNonNull(responseEntity1.getBody()).title();
         assertThrows(ResourceNotFoundException.class, () -> boardService.getPost(id2));
         assertEquals(question1.getTitle(), title);
     }

@@ -19,7 +19,7 @@ public class UserSignInService {
     private final JwtUtil jwtUtil;
 
     public ResponseEntity<UserServiceMessage> signIn(SignInRequestDTO requestDto, HttpServletResponse response) {
-        String name = requestDto.name();
+        String name = requestDto.username();
         String password = requestDto.password();
 
         // User 존재 여부 확인

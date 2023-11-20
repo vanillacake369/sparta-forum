@@ -1,7 +1,9 @@
 package com.restapi.spartaforum.domain.user;
 
 import com.restapi.spartaforum.domain.board.Board;
+import com.restapi.spartaforum.domain.comment.Comment;
 import com.restapi.spartaforum.domain.common.TimeStamp;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -36,8 +38,12 @@ public class User extends TimeStamp {
     @Enumerated(value = EnumType.STRING)
     private UserRoleEnum role;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Board> questions;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Comment> comments;
+
 
     @Builder
     private User(String name, String password, UserRoleEnum role) {
@@ -48,7 +54,7 @@ public class User extends TimeStamp {
 
     public static User of(SignInRequestDTO requestDto) {
         return User.builder()
-                .name(requestDto.name())
+                .name(requestDto.username())
                 .password(requestDto.password())
                 .build();
     }

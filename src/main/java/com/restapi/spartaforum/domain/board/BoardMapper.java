@@ -9,8 +9,8 @@ public interface BoardMapper {
     BoardMapper INSTANCE = Mappers.getMapper(BoardMapper.class);
 
     //    @Mapping(target = "user,password", ignore = true)
-    BoardResponseDto questionToResponseDto(Board question);
+    BoardResponseDTO questionToResponseDto(Board question);
 
     //    @Mapping(target = "user", ignore = true)
-    Board requestDtoToQuestion(BoardRequestDto boardRequestDto);
+    Board requestDtoToQuestion(BoardRequestDTO boardRequestDto);
 }

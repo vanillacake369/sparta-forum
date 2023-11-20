@@ -33,29 +33,19 @@ public class Board extends TimeStamp {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private User author;
 
     @Builder
-    public Board(Long id, String title, String content, User user) {
+    public Board(Long id, String title, String content, User author) {
         this.id = id;
         this.title = title;
         this.content = content;
-        this.user = user;
+        this.author = author;
     }
 
     public Boolean updateBoard(String title, String content) {
         this.title = title;
         this.content = content;
         return TRUE;
-    }
-
-    @Override
-    public String toString() {
-        return "Board{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", user=" + user +
-                '}';
     }
 }

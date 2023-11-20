@@ -26,7 +26,7 @@ public class BoardService {
     3. 생성한 게시글 저장
     4. 반환 DTO 매핑 이후 반환
      */
-    public ResponseEntity<BoardResponseDto> createPost(BoardRequestDto requestDto) {
+    public ResponseEntity<BoardResponseDTO> createPost(BoardRequestDTO requestDto) {
         Board question = Board.builder()
                 .title(requestDto.title())
                 .content(requestDto.content())
@@ -34,7 +34,7 @@ public class BoardService {
 
         Board savedBoard = boardRepository.save(question);
 
-        BoardResponseDto boardResponseDto = boardMapper.questionToResponseDto(savedBoard);
+        BoardResponseDTO boardResponseDto = boardMapper.questionToResponseDto(savedBoard);
 
         return new ResponseEntity<>(boardResponseDto, OK);
     }
@@ -45,20 +45,20 @@ public class BoardService {
     1. 조회, 없다면 ResourceNotFoundException
     */
     @Transactional(readOnly = true)
-    public ResponseEntity<BoardResponseDto> getPost(Long postId) {
+    public ResponseEntity<BoardResponseDTO> getPost(Long postId) {
         // 게시글 찾고, 없다면 예외처리
         Board foundBoard = findByIdOrThrowException(postId);
-        BoardResponseDto responseDto = boardMapper.questionToResponseDto(foundBoard);
+        BoardResponseDTO responseDto = boardMapper.questionToResponseDto(foundBoard);
         return new ResponseEntity<>(responseDto, OK);
     }
 
     /* 모든 게시글 가져오기 */
     @Transactional(readOnly = true)
-    public ResponseEntity<List<BoardResponseDto>> getAllPosts() {
-        List<BoardResponseDto> boardResponseDtos = boardRepository.findAll().stream()
+    public ResponseEntity<List<BoardResponseDTO>> getAllPosts() {
+        List<BoardResponseDTO> boardResponseDTOS = boardRepository.findAll().stream()
                 .map(boardMapper::questionToResponseDto)
                 .collect(Collectors.toList());
-        return new ResponseEntity<>(boardResponseDtos, OK);
+        return new ResponseEntity<>(boardResponseDTOS, OK);
     }
 
     /*
@@ -68,7 +68,7 @@ public class BoardService {
      3. 더티체킹을 위한 update
      4. 수정결과에 따라 status code 반환
      */
-    public ResponseEntity<Boolean> updatePost(Long postId, BoardRequestDto requestDto) {
+    public ResponseEntity<Boolean> updatePost(Long postId, BoardRequestDTO requestDto) {
         Board foundBoard = findByIdOrThrowException(postId);
 
         return new ResponseEntity<>(OK);

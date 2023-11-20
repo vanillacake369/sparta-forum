@@ -1,5 +1,6 @@
 package com.restapi.spartaforum.security.jwt;
 
+import com.fasterxml.jackson.core.JsonParser.Feature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.restapi.spartaforum.domain.user.SignInRequestDTO;
 import com.restapi.spartaforum.domain.user.UserRoleEnum;
@@ -20,20 +21,25 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     public JwtAuthenticationFilter(JwtUtil jwtUtil) {
         this.jwtUtil = jwtUtil;
-        setFilterProcessesUrl("/api/user/login");
+        setFilterProcessesUrl("/api/sparta-forum/user/login");
     }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
         log.info("로그인 시도");
+        log.info("request.getParameter(\"username\") : " + request.getParameter("username"));
+        log.info("request.getParameter(\"password\") : " + request.getParameter("password"));
+
         try {
-            SignInRequestDTO requestDto = new ObjectMapper().readValue(request.getInputStream(),
-                    SignInRequestDTO.class);
+            SignInRequestDTO requestDto = new ObjectMapper().configure(Feature.AUTO_CLOSE_SOURCE, true)
+                    .readValue(request.getInputStream(),
+                            SignInRequestDTO.class);
+            log.error(requestDto.toString());
 
             return getAuthenticationManager().authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            requestDto.name(),
+                            requestDto.username(),
                             requestDto.password(),
                             null
                     )
@@ -59,6 +65,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                               AuthenticationException failed) throws IOException, ServletException {
         log.info("로그인 실패");
+        log.info("request.getParameter(username) : " + request.getParameter("username"));
+        log.info("request.getParameter(password) : " + request.getParameter("password"));
+        log.info("failed.getMessage() : " + failed.getMessage());
         response.setStatus(401);
     }
 }
