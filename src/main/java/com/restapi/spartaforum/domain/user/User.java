@@ -3,6 +3,7 @@ package com.restapi.spartaforum.domain.user;
 import com.restapi.spartaforum.domain.board.Board;
 import com.restapi.spartaforum.domain.comment.Comment;
 import com.restapi.spartaforum.domain.common.TimeStamp;
+import com.restapi.spartaforum.domain.user.dto.SignInRequestDTO;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,50 +25,52 @@ import lombok.RequiredArgsConstructor;
 @Table(name = "user")
 public class User extends TimeStamp {
 
-    private static final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
+	private static final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(nullable = false)
-    private String name;
-    @Column(nullable = false)
-    private String password;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(nullable = false)
-    @Enumerated(value = EnumType.STRING)
-    private UserRoleEnum role;
+	@Column(nullable = false)
+	private String name;
 
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Board> questions;
+	@Column(nullable = false)
+	private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Comment> comments;
+	@Column(nullable = false)
+	@Enumerated(value = EnumType.STRING)
+	private UserRoleEnum role;
+
+	@OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Board> questions;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Comment> comments;
 
 
-    @Builder
-    private User(String name, String password, UserRoleEnum role) {
-        this.name = name;
-        this.password = password;
-        this.role = role;
-    }
+	@Builder
+	private User(String name, String password, UserRoleEnum role) {
+		this.name = name;
+		this.password = password;
+		this.role = role;
+	}
 
-    public static User of(SignInRequestDTO requestDto) {
-        return User.builder()
-                .name(requestDto.username())
-                .password(requestDto.password())
-                .build();
-    }
+	public static User of(SignInRequestDTO requestDto) {
+		return User.builder()
+			.name(requestDto.username())
+			.password(requestDto.password())
+			.build();
+	}
 
-    public static User of(String name, String password, UserRoleEnum role) {
-        return User.builder()
-                .name(name)
-                .password(password)
-                .role(role)
-                .build();
-    }
+	public static User of(String name, String password, UserRoleEnum role) {
+		return User.builder()
+			.name(name)
+			.password(password)
+			.role(role)
+			.build();
+	}
 
-    static boolean hasNotAdminToken(String token) {
-        return !ADMIN_TOKEN.equals(token);
-    }
+	static boolean hasNotAdminToken(String token) {
+		return !ADMIN_TOKEN.equals(token);
+	}
 }

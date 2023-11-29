@@ -2,8 +2,8 @@ package com.restapi.spartaforum.security.jwt;
 
 import com.fasterxml.jackson.core.JsonParser.Feature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.restapi.spartaforum.domain.user.SignInRequestDTO;
 import com.restapi.spartaforum.domain.user.UserRoleEnum;
+import com.restapi.spartaforum.domain.user.dto.SignInRequestDTO;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,57 +17,58 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Slf4j(topic = "로그인 및 JWT 생성")
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-    private final JwtUtil jwtUtil;
 
-    public JwtAuthenticationFilter(JwtUtil jwtUtil) {
-        this.jwtUtil = jwtUtil;
-        setFilterProcessesUrl("/api/sparta-forum/user/login");
-    }
+	private final JwtUtil jwtUtil;
 
-    @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-            throws AuthenticationException {
-        log.info("로그인 시도");
-        log.info("request.getParameter(\"username\") : " + request.getParameter("username"));
-        log.info("request.getParameter(\"password\") : " + request.getParameter("password"));
+	public JwtAuthenticationFilter(JwtUtil jwtUtil) {
+		this.jwtUtil = jwtUtil;
+		setFilterProcessesUrl("/api/sparta-forum/user/login");
+	}
 
-        try {
-            SignInRequestDTO requestDto = new ObjectMapper().configure(Feature.AUTO_CLOSE_SOURCE, true)
-                    .readValue(request.getInputStream(),
-                            SignInRequestDTO.class);
-            log.error(requestDto.toString());
+	@Override
+	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
+		throws AuthenticationException {
+		log.info("로그인 시도");
+		log.info("request.getParameter(\"username\") : " + request.getParameter("username"));
+		log.info("request.getParameter(\"password\") : " + request.getParameter("password"));
 
-            return getAuthenticationManager().authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            requestDto.username(),
-                            requestDto.password(),
-                            null
-                    )
-            );
-        } catch (IOException e) {
-            log.error(e.getMessage());
-            throw new RuntimeException(e.getMessage());
-        }
-    }
+		try {
+			SignInRequestDTO requestDto = new ObjectMapper().configure(Feature.AUTO_CLOSE_SOURCE, true)
+				.readValue(request.getInputStream(),
+					SignInRequestDTO.class);
+			log.error(requestDto.toString());
 
-    @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
-                                            Authentication authResult) throws IOException, ServletException {
-        log.info("로그인 성공 및 JWT 생성");
-        String username = ((UserDetailsImpl) authResult.getPrincipal()).getUsername();
-        UserRoleEnum role = ((UserDetailsImpl) authResult.getPrincipal()).getUser().getRole();
+			return getAuthenticationManager().authenticate(
+				new UsernamePasswordAuthenticationToken(
+					requestDto.username(),
+					requestDto.password(),
+					null
+				)
+			);
+		} catch (IOException e) {
+			log.error(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		}
+	}
 
-        String token = jwtUtil.createToken(username, role);
-        jwtUtil.addJwtToCookie(token, response);
-    }
+	@Override
+	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
+		Authentication authResult) throws IOException, ServletException {
+		log.info("로그인 성공 및 JWT 생성");
+		String username = ((UserDetailsImpl) authResult.getPrincipal()).getUsername();
+		UserRoleEnum role = ((UserDetailsImpl) authResult.getPrincipal()).getUser().getRole();
 
-    @Override
-    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
-                                              AuthenticationException failed) throws IOException, ServletException {
-        log.info("로그인 실패");
-        log.info("request.getParameter(username) : " + request.getParameter("username"));
-        log.info("request.getParameter(password) : " + request.getParameter("password"));
-        log.info("failed.getMessage() : " + failed.getMessage());
-        response.setStatus(401);
-    }
+		String token = jwtUtil.createToken(username, role);
+		jwtUtil.addJwtToCookie(token, response);
+	}
+
+	@Override
+	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+		AuthenticationException failed) throws IOException, ServletException {
+		log.info("로그인 실패");
+		log.info("request.getParameter(username) : " + request.getParameter("username"));
+		log.info("request.getParameter(password) : " + request.getParameter("password"));
+		log.info("failed.getMessage() : " + failed.getMessage());
+		response.setStatus(401);
+	}
 }

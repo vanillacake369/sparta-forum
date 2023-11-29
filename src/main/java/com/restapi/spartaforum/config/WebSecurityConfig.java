@@ -1,4 +1,4 @@
-package com.restapi.spartaforum.security;
+package com.restapi.spartaforum.config;
 
 import com.restapi.spartaforum.security.jwt.JwtAuthenticationFilter;
 import com.restapi.spartaforum.security.jwt.JwtAuthorizationFilter;
@@ -21,26 +21,29 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig {
-    private final JwtUtil jwtUtil;
-    private final UserDetailsServiceImpl userDetailsService;
-    private final AuthenticationConfiguration authenticationConfiguration;
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        // CSRF 설정
-        http.csrf(AbstractHttpConfigurer::disable);
+	private final JwtUtil jwtUtil;
 
-        // 기본 설정인 Session 방식은 사용하지 않고 JWT 방식을 사용하기 위한 설정
-        http.sessionManagement((sessionManagement) ->
-                sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        );
+	private final UserDetailsServiceImpl userDetailsService;
 
-        // permit sources
-        http.authorizeHttpRequests((authorizeHttpRequests) ->
-                        /*  더 구체적인 기준이 덜 구제적인 기준보다 우선하는 것이 절대적으로 중요하다.  */
-                        authorizeHttpRequests
-                                .anyRequest()
-                                .permitAll()
+	private final AuthenticationConfiguration authenticationConfiguration;
+
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		// CSRF 설정
+		http.csrf(AbstractHttpConfigurer::disable);
+
+		// 기본 설정인 Session 방식은 사용하지 않고 JWT 방식을 사용하기 위한 설정
+		http.sessionManagement((sessionManagement) ->
+			sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+		);
+
+		// permit sources
+		http.authorizeHttpRequests((authorizeHttpRequests) ->
+				/*  더 구체적인 기준이 덜 구제적인 기준보다 우선하는 것이 절대적으로 중요하다.  */
+				authorizeHttpRequests
+					.anyRequest()
+					.permitAll()
 //                        .requestMatchers("/api/sparta-forum/admin/**")
 //                        .hasRole("ADMIN") // '/api/sparta-forum/admin/**' 요청 ADMIN만 접근허용
 //                        .requestMatchers(antMatcher(HttpMethod.GET, "/api/sparta-forum/boards"))
@@ -50,45 +53,45 @@ public class WebSecurityConfig {
 //                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
 //                        .permitAll()      // static resources 접근 허용 설정
 //                        .anyRequest().authenticated()
-        );
+		);
 
-        // handle login
-        http.formLogin((formLogin) ->
-                        formLogin.loginPage("/login")
-                                .permitAll()
+		// handle login
+		http.formLogin((formLogin) ->
+				formLogin.loginPage("/login")
+					.permitAll()
 //                        .loginProcessingUrl("/api/sparta-forum/user/signin")
 //                        .defaultSuccessUrl("/")
 //                        .failureUrl("/api/sparta-forum/user/login?error")
 //                        .permitAll()
-        );
+		);
 
-        // 필터 관리
-        http.addFilterBefore(jwtAuthorizationFilter(), JwtAuthenticationFilter.class);
-        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+		// 필터 관리
+		http.addFilterBefore(jwtAuthorizationFilter(), JwtAuthenticationFilter.class);
+		http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
-        return http.build();
-    }
+		return http.build();
+	}
 
-    // passwordEncoder
-    @Bean
-    public BCryptPasswordEncoder encodePassword() {
-        return new BCryptPasswordEncoder();
-    }
+	// passwordEncoder
+	@Bean
+	public BCryptPasswordEncoder encodePassword() {
+		return new BCryptPasswordEncoder();
+	}
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-        return configuration.getAuthenticationManager();
-    }
+	@Bean
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+		return configuration.getAuthenticationManager();
+	}
 
-    @Bean
-    public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
-        JwtAuthenticationFilter filter = new JwtAuthenticationFilter(jwtUtil);
-        filter.setAuthenticationManager(authenticationManager(authenticationConfiguration));
-        return filter;
-    }
+	@Bean
+	public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
+		JwtAuthenticationFilter filter = new JwtAuthenticationFilter(jwtUtil);
+		filter.setAuthenticationManager(authenticationManager(authenticationConfiguration));
+		return filter;
+	}
 
-    @Bean
-    public JwtAuthorizationFilter jwtAuthorizationFilter() {
-        return new JwtAuthorizationFilter(jwtUtil, userDetailsService);
-    }
+	@Bean
+	public JwtAuthorizationFilter jwtAuthorizationFilter() {
+		return new JwtAuthorizationFilter(jwtUtil, userDetailsService);
+	}
 }
