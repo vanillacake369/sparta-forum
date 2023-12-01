@@ -1,6 +1,7 @@
 package com.restapi.spartaforum.domain.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.restapi.spartaforum.domain.answer.entity.Answer;
 import com.restapi.spartaforum.domain.comment.Comment;
 import com.restapi.spartaforum.domain.common.TimeStamp;
 import com.restapi.spartaforum.domain.question.entity.Question;
@@ -29,6 +30,18 @@ public class User extends TimeStamp {
 
 	private static final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
 
+	@JsonIgnore
+	@OneToMany(targetEntity = Question.class, mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+	private final List<Question> questions = new ArrayList<>();
+
+	@JsonIgnore
+	@OneToMany(targetEntity = Answer.class, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private final List<Answer> answers = new ArrayList<>();
+
+	@JsonIgnore
+	@OneToMany(targetEntity = Comment.class, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private final List<Comment> comments = new ArrayList<>();
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -48,14 +61,6 @@ public class User extends TimeStamp {
 	@Column(nullable = false)
 	@Enumerated(value = EnumType.STRING)
 	private UserRoleEnum role;
-
-	@JsonIgnore
-	@OneToMany(targetEntity = Question.class, mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
-	private final List<Question> questions = new ArrayList<>();
-
-	@JsonIgnore
-	@OneToMany(targetEntity = Comment.class, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-	private final List<Comment> comments = new ArrayList<>();
 
 
 	@Builder

@@ -2,8 +2,12 @@ package com.restapi.spartaforum.domain.question.entity;
 
 import static java.lang.Boolean.TRUE;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.restapi.spartaforum.domain.answer.entity.Answer;
+import com.restapi.spartaforum.domain.comment.entity.Comment;
 import com.restapi.spartaforum.domain.common.TimeStamp;
 import com.restapi.spartaforum.domain.user.entity.User;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -12,7 +16,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -20,10 +27,25 @@ import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Getter
-@RequiredArgsConstructor
 @DynamicUpdate
-@Table(name = "board")
+@RequiredArgsConstructor
+@Table(name = "question")
 public class Question extends TimeStamp {
+
+	@JsonIgnore
+	@OneToMany(targetEntity = Answer.class, mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+	private final List<Answer> answers = new ArrayList<>();
+
+	@JsonIgnore
+	@OneToMany(targetEntity = Comment.class, mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+	private final List<Comment> comments = new ArrayList<>();
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id", nullable = false)
+	private User author;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	private User user;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,10 +62,6 @@ public class Question extends TimeStamp {
 
 	@Column
 	private Long dislikes;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id", nullable = false)
-	private User author;
 
 	@Builder
 	public Question(Long id, String title, String body, User author) {
