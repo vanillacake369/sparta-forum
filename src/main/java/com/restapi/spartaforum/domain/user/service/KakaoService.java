@@ -3,10 +3,13 @@ package com.restapi.spartaforum.domain.user.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.restapi.spartaforum.domain.user.repository.UserRepository;
 import com.restapi.spartaforum.domain.user.dto.KakaoUserInfoDto;
+import com.restapi.spartaforum.domain.user.entity.User;
+import com.restapi.spartaforum.domain.user.entity.UserRoleEnum;
+import com.restapi.spartaforum.domain.user.repository.UserRepository;
 import com.restapi.spartaforum.security.jwt.JwtUtil;
 import java.net.URI;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -43,7 +46,11 @@ public class KakaoService {
 		KakaoUserInfoDto kakaoUserInfoDto = getKakaoUserInfo(accessToken);
 		log.info("user info : \n" + kakaoUserInfoDto.toString());
 
-		return null;
+		// 4. 필요한 경우 회원가입
+		User user = registerKakaoUserIfNeeded(kakaoUserInfoDto);
+
+		// 5. JWT 토큰 생성하여 반환
+		return jwtUtil.createToken(user.getNickName(), user.getRole());
 	}
 
 	private String getToken(String code) throws JsonProcessingException {
@@ -69,12 +76,11 @@ public class KakaoService {
 		// 인가코드
 		body.add("code", code);
 
+		// HTTP 요청 보내기
 		RequestEntity<MultiValueMap<String, String>> requestEntity = RequestEntity
 			.post(uri)
 			.headers(headers)
 			.body(body);
-
-		// HTTP 요청 보내기
 		ResponseEntity<String> response = restTemplate.exchange(
 			requestEntity,
 			String.class
@@ -114,11 +120,40 @@ public class KakaoService {
 		Long id = jsonNode.get("id").asLong();
 		String nickname = jsonNode.get("properties")
 			.get("nickname").asText();
-//		String email = jsonNode.get("kakao_account")
-//			.get("email").asText();
-		String email = "randEmail";
+		String email = jsonNode.get("kakao_account")
+			.get("email").asText();
 
 		log.info("카카오 사용자 정보: " + id + ", " + nickname + ", " + email);
 		return new KakaoUserInfoDto(id, nickname, email);
+	}
+
+	private User registerKakaoUserIfNeeded(KakaoUserInfoDto kakaoUserInfo) {
+		// DB 에 중복된 Kakao Id 가 있는지 확인
+		Long kakaoId = kakaoUserInfo.id();
+		User kakaoUser = userRepository.findByKakaoId(kakaoId).orElse(null);
+
+		if (kakaoUser == null) {
+			// 카카오 사용자 email 동일한 email 가진 회원이 있는지 확인
+			String kakaoEmail = kakaoUserInfo.email();
+			User sameEmailUser = userRepository.findByEmail(kakaoEmail).orElse(null);
+			if (sameEmailUser != null) {
+				kakaoUser = sameEmailUser;
+				// 기존 회원정보에 카카오 Id 추가
+				kakaoUser = kakaoUser.kakaoIdUpdate(kakaoId);
+			} else {
+				// 신규 회원가입
+				// password: random UUID
+				String password = UUID.randomUUID().toString();
+				String encodedPassword = passwordEncoder.encode(password);
+
+				// email: kakao email
+				String email = kakaoUserInfo.email();
+
+				kakaoUser = new User(kakaoUserInfo.nickname(), encodedPassword, email, UserRoleEnum.USER, kakaoId);
+			}
+
+			userRepository.save(kakaoUser);
+		}
+		return kakaoUser;
 	}
 }

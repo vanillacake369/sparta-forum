@@ -2,8 +2,8 @@ package com.restapi.spartaforum.domain.user.service;
 
 import static org.springframework.http.HttpStatus.OK;
 
-import com.restapi.spartaforum.domain.user.entity.User;
 import com.restapi.spartaforum.domain.user.dto.SignInRequestDTO;
+import com.restapi.spartaforum.domain.user.entity.User;
 import com.restapi.spartaforum.domain.user.entity.UserServiceMessage;
 import com.restapi.spartaforum.domain.user.repository.UserRepository;
 import com.restapi.spartaforum.security.jwt.JwtUtil;
@@ -26,24 +26,24 @@ public class UserSignInService {
 	private final JwtUtil jwtUtil;
 
 	public ResponseEntity<UserServiceMessage> signIn(SignInRequestDTO requestDto, HttpServletResponse response) {
-		String name = requestDto.username();
+		String nickName = requestDto.nickName();
 		String password = requestDto.password();
 
 		// User 존재 여부 확인
-		User user = verifyIfDuplicated(name);
+		User user = verifyIfDuplicated(nickName);
 
 		// User 암호 확인
 		verifyPassword(user.getPassword(), password);
 
 		// JWT 생성 및 쿠키에 저장 후 Response 객체에 추가
-		String token = jwtUtil.createToken(name, user.getRole());
+		String token = jwtUtil.createToken(nickName, user.getRole());
 		jwtUtil.addJwtToCookie(token, response);
 
 		return new ResponseEntity<>(UserServiceMessage.SIGNIN_SUCCESS, OK);
 	}
 
 	User verifyIfDuplicated(String name) {
-		return userRepository.findUserByName(name).orElseThrow(
+		return userRepository.findUserByNickName(name).orElseThrow(
 			() -> new IllegalArgumentException(UserServiceMessage.NOT_FOUND_USER.getMessage())
 		);
 	}

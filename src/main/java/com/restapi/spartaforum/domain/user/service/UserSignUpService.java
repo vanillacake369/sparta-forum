@@ -2,8 +2,8 @@ package com.restapi.spartaforum.domain.user.service;
 
 import static org.springframework.http.HttpStatus.OK;
 
-import com.restapi.spartaforum.domain.user.entity.User;
 import com.restapi.spartaforum.domain.user.dto.SignUpRequestDTO;
+import com.restapi.spartaforum.domain.user.entity.User;
 import com.restapi.spartaforum.domain.user.entity.UserRoleEnum;
 import com.restapi.spartaforum.domain.user.entity.UserServiceMessage;
 import com.restapi.spartaforum.domain.user.repository.UserRepository;
@@ -22,7 +22,7 @@ public class UserSignUpService {
 	private final PasswordEncoder passwordEncoder;
 
 	public ResponseEntity<UserServiceMessage> signUp(SignUpRequestDTO requestDto) {
-		String name = requestDto.name();
+		String name = requestDto.nickName();
 		String password = requestDto.password();
 
 		// 중복 확인
@@ -47,7 +47,7 @@ public class UserSignUpService {
 	}
 
 	void verifyIfDuplicated(String name, String password) {
-		Optional<User> checkUsername = userRepository.findUserByNameAndPassword(name, password);
+		Optional<User> checkUsername = userRepository.findUserByNickNameAndPassword(name, password);
 		if (checkUsername.isPresent()) {
 			throw new IllegalArgumentException("중복된 사용자가 존재합니다.");
 		}

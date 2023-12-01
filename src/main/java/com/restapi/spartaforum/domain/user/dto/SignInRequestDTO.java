@@ -5,15 +5,8 @@ import com.restapi.spartaforum.domain.user.validator.ValidUserName;
 
 public record SignInRequestDTO(
 	@ValidUserName
-	String username,
+	String nickName,
 	@ValidPassword
 	String password) {
 
-	@Override
-	public String toString() {
-		return "SignInRequestDTO{" +
-			"username='" + username + '\'' +
-			", password='" + password + '\'' +
-			'}';
-	}
 }

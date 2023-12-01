@@ -33,8 +33,11 @@ public class User extends TimeStamp {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Column
+	private Long kakaoId;
+
 	@Column(nullable = false)
-	private String name;
+	private String nickName;
 
 	@Column(nullable = false)
 	private String email;
@@ -56,22 +59,24 @@ public class User extends TimeStamp {
 
 
 	@Builder
-	private User(String name, String password, UserRoleEnum role) {
-		this.name = name;
+	public User(String nickName, String password, String email, UserRoleEnum role, Long kakaoId) {
+		this.nickName = nickName;
 		this.password = password;
+		this.email = email;
 		this.role = role;
+		this.kakaoId = kakaoId;
 	}
 
 	public static User of(SignInRequestDTO requestDto) {
 		return User.builder()
-			.name(requestDto.username())
+			.nickName(requestDto.nickName())
 			.password(requestDto.password())
 			.build();
 	}
 
 	public static User of(String name, String password, UserRoleEnum role) {
 		return User.builder()
-			.name(name)
+			.nickName(name)
 			.password(password)
 			.role(role)
 			.build();
@@ -79,5 +84,10 @@ public class User extends TimeStamp {
 
 	public static boolean hasNotAdminToken(String token) {
 		return !ADMIN_TOKEN.equals(token);
+	}
+
+	public User kakaoIdUpdate(Long kakaoId) {
+		this.kakaoId = kakaoId;
+		return this;
 	}
 }

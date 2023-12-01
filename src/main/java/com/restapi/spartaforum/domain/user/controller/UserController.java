@@ -1,12 +1,12 @@
 package com.restapi.spartaforum.domain.user.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.restapi.spartaforum.domain.user.entity.UserServiceMessage;
-import com.restapi.spartaforum.domain.user.service.UserSignInService;
-import com.restapi.spartaforum.domain.user.service.UserSignUpService;
 import com.restapi.spartaforum.domain.user.dto.SignInRequestDTO;
 import com.restapi.spartaforum.domain.user.dto.SignUpRequestDTO;
+import com.restapi.spartaforum.domain.user.entity.UserServiceMessage;
 import com.restapi.spartaforum.domain.user.service.KakaoService;
+import com.restapi.spartaforum.domain.user.service.UserSignInService;
+import com.restapi.spartaforum.domain.user.service.UserSignUpService;
 import com.restapi.spartaforum.security.jwt.JwtUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -77,18 +77,20 @@ public class UserController {
 	 *
 	 * @throws JsonProcessingException
 	 */
-//	@GetMapping("/kakao/callback")
 	@GetMapping("/kakao/callback")
 	public ResponseEntity<?> kakaoLogin(@RequestParam String code, HttpServletResponse response)
 		throws JsonProcessingException {
 		log.info("=== Controller Starts ===");
 		log.info("code : " + code);
+
 		// 인가 코드를 통해 액세스 토큰 생성
 		String token = kakaoService.kakaoLogin(code);
 		log.info("Token has created : " + token);
+
 		// 액세스 토큰을 쿠키에 저장
-		Cookie cookie = new Cookie(JwtUtil.AUTHORIZATION_HEADER, token);
+		Cookie cookie = new Cookie(JwtUtil.AUTHORIZATION_HEADER, token.substring(7)); // 1-3강의 25:20 :: "Bearer " 떼기
 		cookie.setPath("/");
+
 		// response에 쿠키 저장
 		response.addCookie(cookie);
 

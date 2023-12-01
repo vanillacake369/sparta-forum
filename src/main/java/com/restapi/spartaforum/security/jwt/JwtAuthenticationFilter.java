@@ -2,8 +2,8 @@ package com.restapi.spartaforum.security.jwt;
 
 import com.fasterxml.jackson.core.JsonParser.Feature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.restapi.spartaforum.domain.user.entity.UserRoleEnum;
 import com.restapi.spartaforum.domain.user.dto.SignInRequestDTO;
+import com.restapi.spartaforum.domain.user.entity.UserRoleEnum;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -40,7 +40,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 			return getAuthenticationManager().authenticate(
 				new UsernamePasswordAuthenticationToken(
-					requestDto.username(),
+					requestDto.nickName(),
 					requestDto.password(),
 					null
 				)
