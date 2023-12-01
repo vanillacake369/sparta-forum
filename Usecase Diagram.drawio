@@ -1,0 +1,243 @@
+<mxfile host="app.diagrams.net" modified="2023-12-01T06:06:52.132Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" etag="FrYhm43TYlJ_X8TSZVyq" version="22.1.5" type="github">
+  <diagram name="페이지-1" id="VChcFExWGBkmWLmZkTJ8">
+    <mxGraphModel dx="1290" dy="1711" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Rarymux8slazm6n1vbZk-2" value="사용자" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+          <mxGeometry x="20" y="515" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-7" value="질문게시글 작성" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="180" y="265" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-8" value="질문게시글 전체조회" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="180" y="410" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-9" value="질문게시글 수정" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="260" y="710" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-10" value="질문게시글 삭제" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="90" y="710" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-18" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="Rarymux8slazm6n1vbZk-2" target="Rarymux8slazm6n1vbZk-7" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="70" y="455" as="sourcePoint" />
+            <mxPoint x="350" y="535" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-19" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="Rarymux8slazm6n1vbZk-2" target="Rarymux8slazm6n1vbZk-8" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="60" y="542" as="sourcePoint" />
+            <mxPoint x="190" y="425" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-20" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="Rarymux8slazm6n1vbZk-2" target="Rarymux8slazm6n1vbZk-9" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="60" y="545" as="sourcePoint" />
+            <mxPoint x="190" y="495" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-21" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="Rarymux8slazm6n1vbZk-2" target="Rarymux8slazm6n1vbZk-10" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="70" y="555" as="sourcePoint" />
+            <mxPoint x="190" y="575" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-23" value="제목 입력" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="320" y="-70" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-25" value="" style="endArrow=none;dashed=1;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="Rarymux8slazm6n1vbZk-7" target="Rarymux8slazm6n1vbZk-23" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="370" y="500" as="sourcePoint" />
+            <mxPoint x="420" y="450" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-26" value="includes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="Rarymux8slazm6n1vbZk-25" vertex="1" connectable="0">
+          <mxGeometry x="0.2286" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-27" value="작성자명 입력" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="320" y="-10" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-28" value="비밀번호 입력" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="320" y="50" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-29" value="작성내용 입력" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="320" y="110" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-30" value="작성일 입력" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="320" y="170" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-33" value="저장된 게시글 반환" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="430" y="400" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-34" value="" style="endArrow=none;dashed=1;html=1;rounded=0;entryX=-0.036;entryY=0.665;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="Rarymux8slazm6n1vbZk-7" target="Rarymux8slazm6n1vbZk-27" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="270" y="250" as="sourcePoint" />
+            <mxPoint x="330" y="-40" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-35" value="includes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="Rarymux8slazm6n1vbZk-34" vertex="1" connectable="0">
+          <mxGeometry x="0.2286" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-36" value="" style="endArrow=none;dashed=1;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="Rarymux8slazm6n1vbZk-7" target="Rarymux8slazm6n1vbZk-28" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="250" y="275" as="sourcePoint" />
+            <mxPoint x="326" y="27" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-37" value="includes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="Rarymux8slazm6n1vbZk-36" vertex="1" connectable="0">
+          <mxGeometry x="0.2286" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-38" value="" style="endArrow=none;dashed=1;html=1;rounded=0;entryX=-0.044;entryY=0.546;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryPerimeter=0;" parent="1" source="Rarymux8slazm6n1vbZk-7" target="Rarymux8slazm6n1vbZk-29" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="250" y="275" as="sourcePoint" />
+            <mxPoint x="330" y="80" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-39" value="includes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="Rarymux8slazm6n1vbZk-38" vertex="1" connectable="0">
+          <mxGeometry x="0.2286" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-40" value="" style="endArrow=none;dashed=1;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="Rarymux8slazm6n1vbZk-7" target="Rarymux8slazm6n1vbZk-30" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="250" y="275" as="sourcePoint" />
+            <mxPoint x="325" y="142" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-41" value="includes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="Rarymux8slazm6n1vbZk-40" vertex="1" connectable="0">
+          <mxGeometry x="0.2286" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-42" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="Rarymux8slazm6n1vbZk-7" target="Rarymux8slazm6n1vbZk-33" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="370" y="420" as="sourcePoint" />
+            <mxPoint x="390" y="415" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-44" value="includes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="Rarymux8slazm6n1vbZk-42" vertex="1" connectable="0">
+          <mxGeometry x="0.0254" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-73" value="질문게시글 선택조회" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="180" y="560" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-74" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="Rarymux8slazm6n1vbZk-2" target="Rarymux8slazm6n1vbZk-73" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="60" y="549" as="sourcePoint" />
+            <mxPoint x="190" y="495" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-75" value="비밀번호 제외" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="620" y="400" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-76" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="Rarymux8slazm6n1vbZk-33" target="Rarymux8slazm6n1vbZk-75" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="510" y="415" as="sourcePoint" />
+            <mxPoint x="600" y="415" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-77" value="includes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="Rarymux8slazm6n1vbZk-76" vertex="1" connectable="0">
+          <mxGeometry x="0.0254" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-92" value="비밀번호 검증" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="230" y="860" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-94" value="삭제 실패" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="50" y="860" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-95" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;" parent="1" source="Rarymux8slazm6n1vbZk-94" target="Rarymux8slazm6n1vbZk-10" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="360" y="790" as="sourcePoint" />
+            <mxPoint x="410" y="740" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-98" value="extend" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="Rarymux8slazm6n1vbZk-95" vertex="1" connectable="0">
+          <mxGeometry x="0.0852" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-96" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;" parent="1" source="Rarymux8slazm6n1vbZk-10" target="Rarymux8slazm6n1vbZk-92" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="360" y="790" as="sourcePoint" />
+            <mxPoint x="410" y="740" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-97" value="includes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="Rarymux8slazm6n1vbZk-96" vertex="1" connectable="0">
+          <mxGeometry x="0.0876" y="-3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-99" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;" parent="1" source="Rarymux8slazm6n1vbZk-9" target="Rarymux8slazm6n1vbZk-92" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="283" y="737" as="sourcePoint" />
+            <mxPoint x="451" y="823" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-100" value="includes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="Rarymux8slazm6n1vbZk-99" vertex="1" connectable="0">
+          <mxGeometry x="0.0876" y="-3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-101" value="수정 실패" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="400" y="860" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-102" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;" parent="1" source="Rarymux8slazm6n1vbZk-101" target="Rarymux8slazm6n1vbZk-9" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="322" y="910" as="sourcePoint" />
+            <mxPoint x="258" y="740" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-103" value="extend" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="Rarymux8slazm6n1vbZk-102" vertex="1" connectable="0">
+          <mxGeometry x="0.0852" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-104" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;" parent="1" source="Rarymux8slazm6n1vbZk-10" target="Rarymux8slazm6n1vbZk-73" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="330" y="610" as="sourcePoint" />
+            <mxPoint x="380" y="560" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-105" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;" parent="1" source="Rarymux8slazm6n1vbZk-9" target="Rarymux8slazm6n1vbZk-73" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="330" y="610" as="sourcePoint" />
+            <mxPoint x="380" y="560" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-106" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;" parent="1" source="Rarymux8slazm6n1vbZk-8" target="Rarymux8slazm6n1vbZk-33" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="370" y="590" as="sourcePoint" />
+            <mxPoint x="420" y="540" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-108" value="includes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="Rarymux8slazm6n1vbZk-106" vertex="1" connectable="0">
+          <mxGeometry x="-0.0176" y="-3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-107" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;" parent="1" source="Rarymux8slazm6n1vbZk-73" target="Rarymux8slazm6n1vbZk-33" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="370" y="590" as="sourcePoint" />
+            <mxPoint x="420" y="540" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rarymux8slazm6n1vbZk-109" value="includes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="Rarymux8slazm6n1vbZk-107" vertex="1" connectable="0">
+          <mxGeometry x="0.014" y="3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
