@@ -4,6 +4,7 @@ import static java.lang.Boolean.TRUE;
 
 import com.restapi.spartaforum.domain.common.TimeStamp;
 import com.restapi.spartaforum.domain.user.entity.User;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -28,25 +29,33 @@ public class Question extends TimeStamp {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Column(nullable = false)
 	private String title;
 
-	private String content;
+	@Column(nullable = false)
+	private String body;
+
+	@Column
+	private Long likes;
+
+	@Column
+	private Long dislikes;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = false)
 	private User author;
 
 	@Builder
-	public Question(Long id, String title, String content, User author) {
+	public Question(Long id, String title, String body, User author) {
 		this.id = id;
 		this.title = title;
-		this.content = content;
+		this.body = body;
 		this.author = author;
 	}
 
-	public Boolean updateBoard(String title, String content) {
+	public Boolean updateQuestion(String title, String content) {
 		this.title = title;
-		this.content = content;
+		this.body = content;
 		return TRUE;
 	}
 }

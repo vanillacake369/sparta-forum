@@ -34,7 +34,7 @@ public class QuestionService {
 	public ResponseEntity<QuestionResponseDto> createPost(QuestionRequestDto requestDto) {
 		Question question = Question.builder()
 			.title(requestDto.title())
-			.content(requestDto.content())
+			.content(requestDto.body())
 			.build();
 
 		Question savedQuestion = questionRepository.save(question);
