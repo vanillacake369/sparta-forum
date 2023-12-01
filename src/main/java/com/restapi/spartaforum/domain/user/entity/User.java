@@ -1,8 +1,8 @@
-package com.restapi.spartaforum.domain.user;
+package com.restapi.spartaforum.domain.user.entity;
 
-import com.restapi.spartaforum.domain.board.Board;
 import com.restapi.spartaforum.domain.comment.Comment;
 import com.restapi.spartaforum.domain.common.TimeStamp;
+import com.restapi.spartaforum.domain.question.entity.Question;
 import com.restapi.spartaforum.domain.user.dto.SignInRequestDTO;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -42,7 +42,7 @@ public class User extends TimeStamp {
 	private UserRoleEnum role;
 
 	@OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<Board> questions;
+	private Set<Question> questions;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Comment> comments;
@@ -70,7 +70,7 @@ public class User extends TimeStamp {
 			.build();
 	}
 
-	static boolean hasNotAdminToken(String token) {
+	public static boolean hasNotAdminToken(String token) {
 		return !ADMIN_TOKEN.equals(token);
 	}
 }

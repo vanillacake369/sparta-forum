@@ -1,8 +1,12 @@
-package com.restapi.spartaforum.domain.user;
+package com.restapi.spartaforum.domain.user.service;
 
 import static org.springframework.http.HttpStatus.OK;
 
+import com.restapi.spartaforum.domain.user.entity.User;
 import com.restapi.spartaforum.domain.user.dto.SignUpRequestDTO;
+import com.restapi.spartaforum.domain.user.entity.UserRoleEnum;
+import com.restapi.spartaforum.domain.user.entity.UserServiceMessage;
+import com.restapi.spartaforum.domain.user.repository.UserRepository;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

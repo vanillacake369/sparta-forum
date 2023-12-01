@@ -1,4 +1,6 @@
-package com.restapi.spartaforum.domain.comment;
+package com.restapi.spartaforum.domain.question.entity;
+
+import static java.lang.Boolean.TRUE;
 
 import com.restapi.spartaforum.domain.common.TimeStamp;
 import com.restapi.spartaforum.domain.user.entity.User;
@@ -10,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
@@ -18,8 +21,8 @@ import org.hibernate.annotations.DynamicUpdate;
 @Getter
 @RequiredArgsConstructor
 @DynamicUpdate
-@Table(name = "comment")
-public class Comment extends TimeStamp {
+@Table(name = "board")
+public class Question extends TimeStamp {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,5 +34,19 @@ public class Comment extends TimeStamp {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = false)
-	private User user;
+	private User author;
+
+	@Builder
+	public Question(Long id, String title, String content, User author) {
+		this.id = id;
+		this.title = title;
+		this.content = content;
+		this.author = author;
+	}
+
+	public Boolean updateBoard(String title, String content) {
+		this.title = title;
+		this.content = content;
+		return TRUE;
+	}
 }

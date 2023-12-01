@@ -2,7 +2,7 @@ package com.restapi.spartaforum.security.jwt;
 
 import com.fasterxml.jackson.core.JsonParser.Feature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.restapi.spartaforum.domain.user.UserRoleEnum;
+import com.restapi.spartaforum.domain.user.entity.UserRoleEnum;
 import com.restapi.spartaforum.domain.user.dto.SignInRequestDTO;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

@@ -1,8 +1,11 @@
-package com.restapi.spartaforum.domain.user;
+package com.restapi.spartaforum.domain.user.service;
 
 import static org.springframework.http.HttpStatus.OK;
 
+import com.restapi.spartaforum.domain.user.entity.User;
 import com.restapi.spartaforum.domain.user.dto.SignInRequestDTO;
+import com.restapi.spartaforum.domain.user.entity.UserServiceMessage;
+import com.restapi.spartaforum.domain.user.repository.UserRepository;
 import com.restapi.spartaforum.security.jwt.JwtUtil;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -41,7 +44,7 @@ public class UserSignInService {
 
 	User verifyIfDuplicated(String name) {
 		return userRepository.findUserByName(name).orElseThrow(
-			() -> new IllegalArgumentException(UserServiceMessage.NOT_FOUND_USER.message)
+			() -> new IllegalArgumentException(UserServiceMessage.NOT_FOUND_USER.getMessage())
 		);
 	}
 

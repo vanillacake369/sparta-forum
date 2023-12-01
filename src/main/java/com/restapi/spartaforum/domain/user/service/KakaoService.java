@@ -1,8 +1,9 @@
-package com.restapi.spartaforum.domain.user;
+package com.restapi.spartaforum.domain.user.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.restapi.spartaforum.domain.user.repository.UserRepository;
 import com.restapi.spartaforum.domain.user.dto.KakaoUserInfoDto;
 import com.restapi.spartaforum.security.jwt.JwtUtil;
 import java.net.URI;
