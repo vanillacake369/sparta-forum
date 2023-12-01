@@ -1,5 +1,6 @@
 package com.restapi.spartaforum.domain.user.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.restapi.spartaforum.domain.comment.Comment;
 import com.restapi.spartaforum.domain.common.TimeStamp;
 import com.restapi.spartaforum.domain.question.entity.Question;
@@ -14,7 +15,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -35,17 +37,22 @@ public class User extends TimeStamp {
 	private String name;
 
 	@Column(nullable = false)
+	private String email;
+
+	@Column(nullable = false)
 	private String password;
 
 	@Column(nullable = false)
 	@Enumerated(value = EnumType.STRING)
 	private UserRoleEnum role;
 
-	@OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<Question> questions;
+	@JsonIgnore
+	@OneToMany(targetEntity = Question.class, mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+	private final List<Question> questions = new ArrayList<>();
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<Comment> comments;
+	@JsonIgnore
+	@OneToMany(targetEntity = Comment.class, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private final List<Comment> comments = new ArrayList<>();
 
 
 	@Builder

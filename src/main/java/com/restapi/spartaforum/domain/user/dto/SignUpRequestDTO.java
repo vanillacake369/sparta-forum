@@ -5,7 +5,7 @@ import com.restapi.spartaforum.domain.user.validator.ValidUserName;
 
 public record SignUpRequestDTO(
 	@ValidUserName
-	String name,
+	String email,
 	@ValidPassword
 	String password,
 	boolean isAdmin,
