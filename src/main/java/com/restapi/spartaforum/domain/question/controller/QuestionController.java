@@ -23,8 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/api/sparta-forum/boards")
-public class BoardController {
+@RequestMapping("/api/sparta-forum/questions")
+public class QuestionController {
 
 	private final QuestionService questionService;
 
