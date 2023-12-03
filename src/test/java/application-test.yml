@@ -1,0 +1,30 @@
+spring:
+  # EXCEPTION SOURCE PATH
+  messages:
+    basename: i18n/exception
+    encoding: UTF-8
+  # DATABASE
+  datasource:
+    url: jdbc:mysql://localhost:3306/sparta_forum?serverTimezone=UTC&characterEncoding=UTF-8
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 1026baby
+
+  # JPA
+  jpa:
+    properties:
+      hibernate:
+        # INIT
+        ddl-auto: create-drop
+        # DEV
+        # ddl-auto: update # Only 'create' when init
+        show_sql: true
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    generate-ddl: true
+
+# JWT
+jwt:
+  secret:
+    key:
+      7Iqk7YyM66W07YOA7L2U65Sp7YG065+9U3ByaW5n6rCV7J2Y7Yqc7YSw7LWc7JuQ67mI7J6F64uI64ukLg==
