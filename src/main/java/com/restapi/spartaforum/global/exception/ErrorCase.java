@@ -2,8 +2,8 @@ package com.restapi.spartaforum.global.exception;
 
 public enum ErrorCase {
 	ARGUMENT_NOT_VALID("dataError"),
+	ACCESS_DENIED("accessDeniedError"),
 	EXISTING_USER("existingUser");
-
 	private final String key;
 
 	ErrorCase(String key) {

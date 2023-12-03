@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class DomainException {
+public class DomainException extends RuntimeException {
 
 	protected final ErrorCode errorCode;
 	protected final ErrorDetail errorDetail;

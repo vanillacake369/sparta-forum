@@ -1,12 +1,12 @@
 # Exception Impl Checklist
-- [ ] 글로벌 예외 핸들러 구조화  
+- [x] 글로벌 예외 핸들러 구조화  
   - ** 미완 **
   - ** 미완 **
   - 아,,,이건 어떻게 테스트 한담,,?
   - 아,,,이건 어떻게 테스트 한담,,?
 - [x] ErrorResponse 생성
 - [x] ErrorDetails 생성
-- [ ] 도메인 예외 클래스 생성
+- [x] 도메인 예외 클래스 생성
 
 # Exception Cases Checklist
 ## 일반 회원가입:

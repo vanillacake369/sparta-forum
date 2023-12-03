@@ -22,3 +22,7 @@ existingUser:
   code: "-6"
   msg: "You are an existing member."
   status: "404"
+accessDeniedError:
+  code: "-7"
+  msg: "This request requires a access."
+  status: "403"
