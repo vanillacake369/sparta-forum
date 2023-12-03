@@ -29,12 +29,13 @@ public class MessageConfiguration implements WebMvcConfigurer {
 	public LocaleChangeInterceptor localeChangeInterceptor() {
 		LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
 		lci.setParamName("lang");
+		lci.setIgnoreInvalidLocale(true);
 		return lci;
 	}
 
 	@Override // 인터셉터를 시스템 레지스트리에 등록
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(localeChangeInterceptor());
+		registry.addInterceptor(localeChangeInterceptor()).addPathPatterns("/**");
 	}
 
 	@Bean // yml 파일을 참조하는 MessageSource 선언
@@ -48,6 +49,7 @@ public class MessageConfiguration implements WebMvcConfigurer {
 		ms.setAlwaysUseMessageFormat(true);
 		ms.setUseCodeAsDefaultMessage(true);
 		ms.setFallbackToSystemLocale(true);
+		ms.setDefaultLocale(Locale.KOREAN);
 		return ms;
 	}
 

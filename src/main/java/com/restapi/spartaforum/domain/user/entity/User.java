@@ -2,7 +2,7 @@ package com.restapi.spartaforum.domain.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.restapi.spartaforum.domain.answer.entity.Answer;
-import com.restapi.spartaforum.domain.comment.Comment;
+import com.restapi.spartaforum.domain.comment.entity.Comment;
 import com.restapi.spartaforum.domain.common.TimeStamp;
 import com.restapi.spartaforum.domain.question.entity.Question;
 import com.restapi.spartaforum.domain.user.dto.SignInRequestDTO;
@@ -28,10 +28,11 @@ import lombok.RequiredArgsConstructor;
 @Table(name = "user")
 public class User extends TimeStamp {
 
+	@JsonIgnore
 	private static final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
 
 	@JsonIgnore
-	@OneToMany(targetEntity = Question.class, mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(targetEntity = Question.class, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private final List<Question> questions = new ArrayList<>();
 
 	@JsonIgnore
@@ -64,7 +65,7 @@ public class User extends TimeStamp {
 
 
 	@Builder
-	public User(String nickName, String password, String email, UserRoleEnum role, Long kakaoId) {
+	private User(String nickName, String password, String email, UserRoleEnum role, Long kakaoId) {
 		this.nickName = nickName;
 		this.password = password;
 		this.email = email;

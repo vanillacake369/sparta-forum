@@ -42,9 +42,6 @@ public class Question extends TimeStamp {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = false)
-	private User author;
-
-	@ManyToOne(fetch = FetchType.LAZY)
 	private User user;
 
 	@Id
@@ -63,12 +60,15 @@ public class Question extends TimeStamp {
 	@Column
 	private Long dislikes;
 
+
 	@Builder
-	public Question(Long id, String title, String body, User author) {
+	public Question(User user, Long id, String title, String body, Long likes, Long dislikes) {
+		this.user = user;
 		this.id = id;
 		this.title = title;
 		this.body = body;
-		this.author = author;
+		this.likes = likes;
+		this.dislikes = dislikes;
 	}
 
 	public Boolean updateQuestion(String title, String content) {

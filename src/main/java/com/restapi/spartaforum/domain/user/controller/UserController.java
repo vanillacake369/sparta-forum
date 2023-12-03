@@ -11,13 +11,10 @@ import com.restapi.spartaforum.security.jwt.JwtUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,15 +35,7 @@ public class UserController {
 	private final UserSignInService signInService;
 
 	@PostMapping("/signup")
-	public ResponseEntity<UserServiceMessage> signUp(@RequestBody @Valid SignUpRequestDTO requestDto,
-		BindingResult bindingResult) {
-		List<FieldError> fieldErrors = bindingResult.getFieldErrors();
-		if (fieldErrors.size() > 0) {
-			for (FieldError fieldError : bindingResult.getFieldErrors()) {
-				log.error(fieldError.getField() + "필드" + fieldError.getDefaultMessage());
-			}
-		}
-
+	public ResponseEntity<UserServiceMessage> signUp(@RequestBody @Valid SignUpRequestDTO requestDto) {
 		return signUpService.signUp(requestDto);
 	}
 
@@ -64,17 +53,14 @@ public class UserController {
 	}
 
 	/**
-	 * 인가코드 받기
+	 * 인가코드 받기 레퍼런스
+	 * <a href="https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#request-code-request-query">...</a> -
+	 * <a href="https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#request-code-response">...</a>
+	 * @param code     인가코드
+	 * @param response 응답서블릿
+	 * @return 인가코드에 따른 생성된 액세스 토큰 반환
 	 *
-	 * 레퍼런스
-	 *
-	 * https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#request-code-request-query -
-	 * https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#request-code-response
-	 * @param code
-	 * @param response
-	 * @return
-	 *
-	 * @throws JsonProcessingException
+	 * @throws JsonProcessingException JSON Serialize 실패에 대한 예외
 	 */
 	@GetMapping("/kakao/callback")
 	public ResponseEntity<?> kakaoLogin(@RequestParam String code, HttpServletResponse response)

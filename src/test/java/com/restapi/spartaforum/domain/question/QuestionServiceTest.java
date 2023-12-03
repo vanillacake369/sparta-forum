@@ -48,7 +48,7 @@ class QuestionServiceTest {
 		User save = userRepository.save(user);
 		Question question1 = Question.builder()
 			.id(id1)
-			.author(save)
+			.user(save)
 			.build();
 		questionRepository.save(question1);
 		// 저장하지 않은 경우
