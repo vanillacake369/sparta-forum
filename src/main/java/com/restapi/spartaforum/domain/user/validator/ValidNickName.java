@@ -17,11 +17,12 @@ import java.lang.annotation.Target;
 @Documented
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RUNTIME)
-@Constraint(validatedBy = {UserNameValidator.class})
-public @interface ValidUserName {
-    String message() default "이름 형식에 맞지 않습니다.";
+@Constraint(validatedBy = {UserNickNameValidator.class})
+public @interface ValidNickName {
 
-    Class<?>[] groups() default {};
+	String message() default "닉네임 형식에 맞지 않습니다.";
 
-    Class<? extends Payload>[] payload() default {};
+	Class<?>[] groups() default {};
+
+	Class<? extends Payload>[] payload() default {};
 }
