@@ -65,7 +65,7 @@ public class User extends TimeStamp {
 
 
 	@Builder
-	private User(String nickName, String password, String email, UserRoleEnum role, Long kakaoId) {
+	public User(String nickName, String password, String email, UserRoleEnum role, Long kakaoId) {
 		this.nickName = nickName;
 		this.password = password;
 		this.email = email;

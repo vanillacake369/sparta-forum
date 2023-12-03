@@ -1,12 +1,15 @@
 package com.restapi.spartaforum.global.exception;
 
 import jakarta.annotation.PostConstruct;
+import java.util.Locale;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
+@Component
 public class ErrorCaseResolver {
 
 	private static MessageSource messageSource;
@@ -40,6 +43,11 @@ public class ErrorCaseResolver {
 	// code정보에 해당하는 메시지를 조회합니다.
 	private static String getMessage(String code) {
 		return getMessage(code, null);
+	}
+
+	// 에러 케이스 코드를 반환
+	public int getCodeTest(ErrorCase errorCase) {
+		return Integer.parseInt(wiredMessageSource.getMessage(errorCase.getCode(), null, Locale.KOREAN));
 	}
 
 	@PostConstruct
