@@ -1,32 +1,77 @@
+# Common
 unKnown:
-  code: "-9998"
+  code: "-9000"
   msg: "알수 없는 오류가 발생하였습니다."
   status: "404"
+communicationError:
+  code: "-9001"
+  msg: "통신 중 오류가 발생하였습니다."
+  status: "404"
 dataError:
-  code: "-9999"
+  code: "-9002"
   msg: "형식에 맞지 않는 데이터 오류가 발생하였습니다."
   status: "400"
+
+# User
 userNotFound:
-  code: "-1000"
+  code: "-1100"
   msg: "존재하지 않는 회원입니다."
   status: "404"
 emailSigninFailed:
-  code: "-1001"
+  code: "-1101"
   msg: "계정이 존재하지 않거나 이메일 또는 비밀번호가 정확하지 않습니다."
   status: "404"
 entryPointException:
-  code: "-1002"
+  code: "-1102"
   msg: "해당 리소스에 접근하기 위한 권한이 없습니다."
   status: "404"
 accessDenied:
-  code: "-1003"
+  code: "-1103"
   msg: "보유한 권한으로 접근할수 없는 리소스 입니다."
   status: "404"
-communicationError:
-  code: "-1004"
-  msg: "통신 중 오류가 발생하였습니다."
-  status: "404"
 existingUser:
-  code: "-1005"
+  code: "-1105"
   msg: "이미 가입한 회원입니다. 로그인을 해주십시오."
-  status: "404"
+  status: "409"
+requiresLogin:
+  code: "-1106"
+  msg: "로그인이 필요한 요청입니다. 로그인을 해주십시오."
+  status: "401"
+
+# Question
+duplicatedQuestion:
+  code: "-2101"
+  msg: "요청에 대한 질문글이 기존에 이미 존재합니다."
+  status: "409"
+notAuthorOfQuestion:
+  code: "-2102"
+  msg: "해당 질문글의 소유주가 아닙니다."
+  status: "400"
+
+# Answer
+duplicatedAnswer:
+  code: "-3101"
+  msg: "요청에 대한 답변글이 기존에 이미 존재합니다."
+  status: "409"
+unmatchedParentQuestion:
+  code: "-3102"
+  msg: "대상 질문글에 해당하는 답변글 요청이 아닙니다."
+  status: "409"
+notAuthorOfAnswer:
+  code: "-3103"
+  msg: "해당 답변글의 소유주가 아닙니다."
+  status: "400"
+
+# Comment
+duplicatedComment:
+  code: "-4101"
+  msg: "요청에 대한 댓글이 기존에 이미 존재합니다."
+  status: "409"
+unmatchedParentPost:
+  code: "-4102"
+  msg: "대상 질문글(혹은 답변글)에 해당하는 댓글 요청이 아닙니다."
+  status: "409"
+notAuthorOfComment:
+  code: "-4103"
+  msg: "해당 댓글의 소유주가 아닙니다."
+  status: "400"
