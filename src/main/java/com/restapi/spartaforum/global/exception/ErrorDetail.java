@@ -37,6 +37,11 @@ public class ErrorDetail {
 		this.timestamp = timestamp;
 	}
 
+	/**
+	 * 이 메서드의 역할
+	 * @param bindingResult 파라미터의 역할
+	 * @return 반환값은 어떤 반환값인지 설명
+	 */
 	public static List<ErrorDetail> of(BindingResult bindingResult) {
 		List<FieldError> fieldErrors = bindingResult.getFieldErrors();
 		return fieldErrors.stream()

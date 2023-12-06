@@ -51,7 +51,6 @@ public class MessageConfiguration implements WebMvcConfigurer {
 		ms.setAlwaysUseMessageFormat(true);
 		ms.setUseCodeAsDefaultMessage(true);
 		ms.setFallbackToSystemLocale(true);
-		ms.setDefaultLocale(Locale.KOREAN);
 		return ms;
 	}
 

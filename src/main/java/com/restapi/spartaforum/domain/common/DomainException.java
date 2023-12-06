@@ -2,13 +2,15 @@ package com.restapi.spartaforum.domain.common;
 
 import com.restapi.spartaforum.global.exception.ErrorCode;
 import com.restapi.spartaforum.global.exception.ErrorDetail;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+
 @Getter
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class DomainException extends RuntimeException {
 
-	protected final ErrorCode errorCode;
-	protected final ErrorDetail errorDetail;
+	protected ErrorCode errorCode;
+	protected ErrorDetail errorDetail;
 }
